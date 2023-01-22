@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="efdbModelStoreContainer" CdmEntityContainer="efdbEntities11">
+    <EntitySetMapping Name="Chatinfoes">
+      <EntityTypeMapping TypeName="efdbModel.Chatinfo">
+        <MappingFragment StoreEntitySet="Chatinfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="time" ColumnName="time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chats">
+      <EntityTypeMapping TypeName="efdbModel.Chat">
+        <MappingFragment StoreEntitySet="Chats">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="infoid" ColumnName="infoid" />
+          <ScalarProperty Name="senderid" ColumnName="senderid" />
+          <ScalarProperty Name="recieverid" ColumnName="recieverid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FacilitiesForRooms">
+      <EntityTypeMapping TypeName="efdbModel.FacilitiesForRoom">
+        <MappingFragment StoreEntitySet="FacilitiesForRoom">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="facilitiesId" ColumnName="facilitiesId" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facilities">
+      <EntityTypeMapping TypeName="efdbModel.Facility">
+        <MappingFragment StoreEntitySet="Facility">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="icon" ColumnName="icon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Owners">
+      <EntityTypeMapping TypeName="efdbModel.Owner">
+        <MappingFragment StoreEntitySet="Owners">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payinfoes">
+      <EntityTypeMapping TypeName="efdbModel.Payinfo">
+        <MappingFragment StoreEntitySet="Payinfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="efdbModel.Payment">
+        <MappingFragment StoreEntitySet="Payments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="infoid" ColumnName="infoid" />
+          <ScalarProperty Name="rentid" ColumnName="rentid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RentInfoes">
+      <EntityTypeMapping TypeName="efdbModel.RentInfo">
+        <MappingFragment StoreEntitySet="RentInfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="startdate" ColumnName="startdate" />
+          <ScalarProperty Name="enddate" ColumnName="enddate" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="posted" ColumnName="posted" />
+          <ScalarProperty Name="pic" ColumnName="pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rents">
+      <EntityTypeMapping TypeName="efdbModel.Rent">
+        <MappingFragment StoreEntitySet="Rents">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="InfoId" ColumnName="InfoId" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+          <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="requestinfoes">
+      <EntityTypeMapping TypeName="efdbModel.requestinfo">
+        <MappingFragment StoreEntitySet="requestinfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="efdbModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="infoid" ColumnName="infoid" />
+          <ScalarProperty Name="tenantid" ColumnName="tenantid" />
+          <ScalarProperty Name="rentid" ColumnName="rentid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reviewinfoes">
+      <EntityTypeMapping TypeName="efdbModel.reviewinfo">
+        <MappingFragment StoreEntitySet="reviewinfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="review" ColumnName="review" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reviewofrents">
+      <EntityTypeMapping TypeName="efdbModel.reviewofrent">
+        <MappingFragment StoreEntitySet="reviewofrent">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="rentid" ColumnName="rentid" />
+          <ScalarProperty Name="reviewerid" ColumnName="reviewerid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reviewofusers">
+      <EntityTypeMapping TypeName="efdbModel.Reviewofuser">
+        <MappingFragment StoreEntitySet="Reviewofuser">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="infoid" ColumnName="infoid" />
+          <ScalarProperty Name="reviewerid" ColumnName="reviewerid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roominfoes">
+      <EntityTypeMapping TypeName="efdbModel.roominfo">
+        <MappingFragment StoreEntitySet="roominfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="nofrooms" ColumnName="nofrooms" />
+          <ScalarProperty Name="maxmembers" ColumnName="maxmembers" />
+          <ScalarProperty Name="atfloor" ColumnName="atfloor" />
+          <ScalarProperty Name="sqft" ColumnName="sqft" />
+          <ScalarProperty Name="zone" ColumnName="zone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="efdbModel.Room">
+        <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="infoid" ColumnName="infoid" />
+          <ScalarProperty Name="ownerid" ColumnName="ownerid" />
+          <ScalarProperty Name="upazilaid" ColumnName="upazilaid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="efdbModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tenants">
+      <EntityTypeMapping TypeName="efdbModel.Tenant">
+        <MappingFragment StoreEntitySet="Tenants">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAuths">
+      <EntityTypeMapping TypeName="efdbModel.UserAuth">
+        <MappingFragment StoreEntitySet="UserAuth">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserContacts">
+      <EntityTypeMapping TypeName="efdbModel.UserContact">
+        <MappingFragment StoreEntitySet="UserContact">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="cell" ColumnName="cell" />
+          <ScalarProperty Name="address" ColumnName="address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProperties">
+      <EntityTypeMapping TypeName="efdbModel.UserProperty">
+        <MappingFragment StoreEntitySet="UserProperties">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="efdbModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="PropertiesId" ColumnName="PropertiesId" />
+          <ScalarProperty Name="AuthId" ColumnName="AuthId" />
+          <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="efdbModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="efdbModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="efdbModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="efdbModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="efdbModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="efdbModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="efdbModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="efdbModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="efdbModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

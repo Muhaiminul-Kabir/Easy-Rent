@@ -1,0 +1,131 @@
+﻿
+@model projectsd.Models.View.Rooms
+
+@{
+    ViewBag.Title = "Details";
+} 
+<br /><br />
+<br /><br />
+<br />
+<br /><br /><div class=" coverpic my-2"><img src="~/Content/images/coverpic/@Model.pic" alt="Girl in a jacket" width="700" height="600"></div>
+
+<div id="booking" class="section">
+    <div class="section-center">
+        <div class="container">
+            
+<br /><br />
+<br /><br />
+<br /><br />
+<br /><br />
+<br />
+            <div class="row">
+                <div class="col-md-7 col-md-push-5">
+                    <h3 class="text-dark border-dark"> Details</h3>
+                    <div class="mx-4 my-3">
+                        @if (Model.isAvaliable)
+                        {
+                            <p>Status: <span class="text-success font-weight-bold">Available</span></p>
+                        }
+                        else
+                        {
+
+                            <p>Status: <span class="text-danger font-weight-bold">Rented</span></p>
+                        }
+                        <p>Rooms: @Model.noofrooms</p>
+                        <p>Members: @Model.needmembers<span>/</span>@Model.maxmembers</p>
+                        <p>Rooms: @Model.noofrooms</p>
+                        <p>Address: <span class="font-weight-bold">@Model.Location<span></p>
+                        <p>Size: @Model.size<span> sqft</span></p>
+                    </div>
+                    <br />
+                    <br />
+                    <h3 class="text-dark " >Facilities</h3>
+                    
+                        @foreach (var item in Model.facilities)
+                        {
+                            <div class="my-3 d-flex flex-row facilities">
+                                <div class="mx-3 text-dark icon">@Html.Raw(item.icon)</div>
+                                <div class="type text-dark">@item.type</div>
+                            </div>
+                        }
+                        <br />
+                    <br />
+                    <br />
+                   
+
+                </div>
+                
+                <div class="fixed-top  py-4 px-4 shadow bg-dark rounded-2 col-md-4 text-white col-md-pull-7" style="margin-left:65%;margin-top:10%">
+                    <div class="booking-form">
+                       @if (Model.isAvaliable)
+                       {
+                            <form>
+                            <div class="form-group">
+                                <span class="form-label">Your Destination</span>
+                                <input class="form-control" type="text" placeholder="Enter a destination or hotel name">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Check In</span>
+                                        <input class="form-control" type="date" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Check out</span>
+                                        <input class="form-control" type="date" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Rooms</span>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                        <span class="select-arrow"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Adults</span>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                        <span class="select-arrow"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Children</span>
+                                        <select class="form-control">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                        </select>
+                                        <span class="select-arrow"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-btn">
+                                <button class="submit-btn">Request</button>
+                            </div>
+                        </form>
+                       }
+                       else
+                       {
+                        <p class="font-weight-bold">Rented By</p><br />
+                           
+                       }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

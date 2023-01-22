@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="efdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Chatinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="text" Type="varchar" MaxLength="255" />
+    <Property Name="time" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Chats">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="infoid" Type="int" />
+    <Property Name="senderid" Type="int" />
+    <Property Name="recieverid" Type="int" />
+  </EntityType>
+  <EntityType Name="FacilitiesForRoom">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="facilitiesId" Type="int" />
+    <Property Name="RoomId" Type="int" />
+  </EntityType>
+  <EntityType Name="Facility">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="type" Type="varchar" MaxLength="50" />
+    <Property Name="icon" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+  </EntityType>
+  <EntityType Name="Payinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date" Type="date" />
+    <Property Name="amount" Type="int" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="infoid" Type="int" />
+    <Property Name="rentid" Type="int" />
+  </EntityType>
+  <EntityType Name="RentInfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="startdate" Type="date" />
+    <Property Name="enddate" Type="date" />
+    <Property Name="price" Type="int" />
+    <Property Name="posted" Type="date" />
+    <Property Name="pic" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Rents">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InfoId" Type="int" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="TenantId" Type="int" />
+  </EntityType>
+  <EntityType Name="requestinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="status" Type="varchar" MaxLength="50" />
+    <Property Name="date" Type="date" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="infoid" Type="int" />
+    <Property Name="tenantid" Type="int" />
+    <Property Name="rentid" Type="int" />
+  </EntityType>
+  <EntityType Name="reviewinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="review" Type="varchar" MaxLength="255" />
+    <Property Name="date" Type="date" />
+  </EntityType>
+  <EntityType Name="reviewofrent">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rentid" Type="int" />
+    <Property Name="reviewerid" Type="int" />
+  </EntityType>
+  <EntityType Name="Reviewofuser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userid" Type="int" />
+    <Property Name="infoid" Type="int" />
+    <Property Name="reviewerid" Type="int" />
+  </EntityType>
+  <EntityType Name="roominfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="50" />
+    <Property Name="nofrooms" Type="int" />
+    <Property Name="maxmembers" Type="int" />
+    <Property Name="atfloor" Type="int" />
+    <Property Name="sqft" Type="int" />
+    <Property Name="zone" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="infoid" Type="int" />
+    <Property Name="ownerid" Type="int" />
+    <Property Name="upazilaid" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tenants">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" />
+  </EntityType>
+  <EntityType Name="UserAuth">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pass" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserContact">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="cell" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProperties">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="age" Type="int" />
+    <Property Name="gender" Type="varchar" MaxLength="50" />
+    <Property Name="rating" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PropertiesId" Type="int" Nullable="false" />
+    <Property Name="AuthId" Type="int" Nullable="false" />
+    <Property Name="ContactId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Facilitie__facil__2D47B39A">
+    <End Role="Facility" Type="Self.Facility" Multiplicity="0..1" />
+    <End Role="FacilitiesForRoom" Type="Self.FacilitiesForRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facility">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FacilitiesForRoom">
+        <PropertyRef Name="facilitiesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Facilitie__RoomI__2E3BD7D3">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+    <End Role="FacilitiesForRoom" Type="Self.FacilitiesForRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FacilitiesForRoom">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chats_Chatinfo">
+    <End Role="Chatinfo" Type="Self.Chatinfo" Multiplicity="0..1" />
+    <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chatinfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chats">
+        <PropertyRef Name="infoid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chats_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chats">
+        <PropertyRef Name="senderid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chats_Users1">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chats">
+        <PropertyRef Name="recieverid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owners_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Owners" Type="Self.Owners" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Owners">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payments_Payinfo">
+    <End Role="Payinfo" Type="Self.Payinfo" Multiplicity="0..1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payinfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="infoid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payments_Rents">
+    <End Role="Rents" Type="Self.Rents" Multiplicity="0..1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rents">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="rentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rents_RentInfo">
+    <End Role="RentInfo" Type="Self.RentInfo" Multiplicity="0..1" />
+    <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rents">
+        <PropertyRef Name="InfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rents_Rooms">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+    <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rents">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rents_Tenants">
+    <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+    <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tenants">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rents">
+        <PropertyRef Name="TenantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Rents">
+    <End Role="Rents" Type="Self.Rents" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rents">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="rentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_requestinfo">
+    <End Role="requestinfo" Type="Self.requestinfo" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="requestinfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="infoid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Tenants">
+    <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tenants">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="tenantid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reviewofrent_Rents">
+    <End Role="Rents" Type="Self.Rents" Multiplicity="0..1" />
+    <End Role="reviewofrent" Type="Self.reviewofrent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rents">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reviewofrent">
+        <PropertyRef Name="rentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reviewofrent_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="reviewofrent" Type="Self.reviewofrent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reviewofrent">
+        <PropertyRef Name="reviewerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviewofuser_reviewinfo">
+    <End Role="reviewinfo" Type="Self.reviewinfo" Multiplicity="0..1" />
+    <End Role="Reviewofuser" Type="Self.Reviewofuser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="reviewinfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Reviewofuser">
+        <PropertyRef Name="infoid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviewofuser_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Reviewofuser" Type="Self.Reviewofuser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Reviewofuser">
+        <PropertyRef Name="reviewerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviewofuser_Users1">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Reviewofuser" Type="Self.Reviewofuser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Reviewofuser">
+        <PropertyRef Name="reviewerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rooms_Owners">
+    <End Role="Owners" Type="Self.Owners" Multiplicity="0..1" />
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rooms">
+        <PropertyRef Name="ownerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rooms_roominfo">
+    <End Role="roominfo" Type="Self.roominfo" Multiplicity="0..1" />
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roominfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rooms">
+        <PropertyRef Name="infoid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenants_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Tenants" Type="Self.Tenants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tenants">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_UserAuth">
+    <End Role="UserAuth" Type="Self.UserAuth" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserAuth">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="AuthId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_UserContact">
+    <End Role="UserContact" Type="Self.UserContact" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserContact">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="ContactId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_UserProperties">
+    <End Role="UserProperties" Type="Self.UserProperties" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProperties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="PropertiesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="efdbModelStoreContainer">
+    <EntitySet Name="Chatinfo" EntityType="Self.Chatinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Chats" EntityType="Self.Chats" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FacilitiesForRoom" EntityType="Self.FacilitiesForRoom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payinfo" EntityType="Self.Payinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentInfo" EntityType="Self.RentInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rents" EntityType="Self.Rents" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="requestinfo" EntityType="Self.requestinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reviewinfo" EntityType="Self.reviewinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reviewofrent" EntityType="Self.reviewofrent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reviewofuser" EntityType="Self.Reviewofuser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="roominfo" EntityType="Self.roominfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tenants" EntityType="Self.Tenants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAuth" EntityType="Self.UserAuth" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserContact" EntityType="Self.UserContact" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProperties" EntityType="Self.UserProperties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Facilitie__facil__2D47B39A" Association="Self.FK__Facilitie__facil__2D47B39A">
+      <End Role="Facility" EntitySet="Facility" />
+      <End Role="FacilitiesForRoom" EntitySet="FacilitiesForRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Facilitie__RoomI__2E3BD7D3" Association="Self.FK__Facilitie__RoomI__2E3BD7D3">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="FacilitiesForRoom" EntitySet="FacilitiesForRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chats_Chatinfo" Association="Self.FK_Chats_Chatinfo">
+      <End Role="Chatinfo" EntitySet="Chatinfo" />
+      <End Role="Chats" EntitySet="Chats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chats_Users" Association="Self.FK_Chats_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Chats" EntitySet="Chats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chats_Users1" Association="Self.FK_Chats_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Chats" EntitySet="Chats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owners_Users" Association="Self.FK_Owners_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Owners" EntitySet="Owners" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payments_Payinfo" Association="Self.FK_Payments_Payinfo">
+      <End Role="Payinfo" EntitySet="Payinfo" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payments_Rents" Association="Self.FK_Payments_Rents">
+      <End Role="Rents" EntitySet="Rents" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rents_RentInfo" Association="Self.FK_Rents_RentInfo">
+      <End Role="RentInfo" EntitySet="RentInfo" />
+      <End Role="Rents" EntitySet="Rents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rents_Rooms" Association="Self.FK_Rents_Rooms">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="Rents" EntitySet="Rents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rents_Tenants" Association="Self.FK_Rents_Tenants">
+      <End Role="Tenants" EntitySet="Tenants" />
+      <End Role="Rents" EntitySet="Rents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Rents" Association="Self.FK_Requests_Rents">
+      <End Role="Rents" EntitySet="Rents" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_requestinfo" Association="Self.FK_Requests_requestinfo">
+      <End Role="requestinfo" EntitySet="requestinfo" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Tenants" Association="Self.FK_Requests_Tenants">
+      <End Role="Tenants" EntitySet="Tenants" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reviewofrent_Rents" Association="Self.FK_reviewofrent_Rents">
+      <End Role="Rents" EntitySet="Rents" />
+      <End Role="reviewofrent" EntitySet="reviewofrent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reviewofrent_Users" Association="Self.FK_reviewofrent_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="reviewofrent" EntitySet="reviewofrent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviewofuser_reviewinfo" Association="Self.FK_Reviewofuser_reviewinfo">
+      <End Role="reviewinfo" EntitySet="reviewinfo" />
+      <End Role="Reviewofuser" EntitySet="Reviewofuser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviewofuser_Users" Association="Self.FK_Reviewofuser_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reviewofuser" EntitySet="Reviewofuser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviewofuser_Users1" Association="Self.FK_Reviewofuser_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reviewofuser" EntitySet="Reviewofuser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rooms_Owners" Association="Self.FK_Rooms_Owners">
+      <End Role="Owners" EntitySet="Owners" />
+      <End Role="Rooms" EntitySet="Rooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rooms_roominfo" Association="Self.FK_Rooms_roominfo">
+      <End Role="roominfo" EntitySet="roominfo" />
+      <End Role="Rooms" EntitySet="Rooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenants_Users" Association="Self.FK_Tenants_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Tenants" EntitySet="Tenants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserAuth" Association="Self.FK_User_UserAuth">
+      <End Role="UserAuth" EntitySet="UserAuth" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserContact" Association="Self.FK_User_UserContact">
+      <End Role="UserContact" EntitySet="UserContact" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserProperties" Association="Self.FK_User_UserProperties">
+      <End Role="UserProperties" EntitySet="UserProperties" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

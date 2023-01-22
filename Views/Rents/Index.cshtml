@@ -1,0 +1,101 @@
+﻿@model IEnumerable<projectsd.Models.View.Rent>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<h2>Index</h2>
+
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search rent" aria-label="Search rent" aria-describedby="button-addon2">
+    
+</div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row">
+    @foreach (var item in Model)
+
+ 
+    {
+        <div class="col-lg-4 col-md-12 mb-4">
+        <div class="card hover-zoom">
+            <div class="bg-image hover-zoom "
+                 data-mdb-ripple-color="light">
+                <img src="~/Content/images/coverpic/@item.pic"
+                     class="w-100" />
+                
+            </div>
+            <div class="card-body">
+                
+                    <h5 id="id" class="card-title mb-3">@Html.ActionLink("Rent-"+item.ID,"Details","Rents",new{id = item.ID},null)</h5>
+ 
+
+                <h6 class="mb-3">@item.posted</h6>
+                <h6 class="mb-3">Price: @item.price BDT</h6>
+                 
+                
+            </div>
+        </div>
+    </div> 
+    }
+ 
+</div>
+
+@section scripts{
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var url = "@Url.Action("Details","RentsController")";
+    var id = $("#id").val.toString();
+    var x = id.split("-");
+    var model = { ID: x,Price :234, Location:"Detroit"};
+
+    $.post(url, model, function(res){
+        //res contains the markup returned by the partial view
+        //You probably want to set that to some Div.
+        $("#SomeDivToShowTheResult").html(res);
+    });
+
+
+
+
+
+
+    $(function () {
+        GetCustomers();
+        $("#txtCustomerName").keyup(function () {
+            GetCustomers();
+        });
+    });
+    function GetCustomers() {
+        var customerName = $.trim($("#txtCustomerName").val());
+        $.ajax({
+            type: "POST",
+            url: "/Home/SearchCustomers",
+            data: "{customerName:'" + customerName + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (customers) {
+                var table = $("#tblCustomers");
+                table.find("tr:not(:first)").remove();
+                $.each(customers, function (i, customer) {
+                    var table = $("#tblCustomers");
+                    var row = table[0].insertRow(-1);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(0).html(customer.CustomerID);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(1).html(customer.ContactName);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(2).html(customer.City);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(3).html(customer.Country);
+                });
+            }
+        });
+    }
+    </script>
+
+}
