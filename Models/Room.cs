@@ -17,17 +17,22 @@ namespace projectsd.Models
         public Room()
         {
             this.FacilitiesForRooms = new HashSet<FacilitiesForRoom>();
-            this.Rents = new HashSet<Rent>();
+            this.Rentealseats = new HashSet<Rentealseat>();
         }
     
         public int id { get; set; }
-        public Nullable<int> infoid { get; set; }
-        public Nullable<int> ownerid { get; set; }
+        public string address { get; set; }
+        public Nullable<int> noofrooms { get; set; }
+        public Nullable<int> maxmembers { get; set; }
+        public Nullable<int> atfloor { get; set; }
+        public Nullable<int> sqft { get; set; }
+        public string zone { get; set; }
         public Nullable<int> upazilaid { get; set; }
+        public Nullable<int> ownerid { get; set; }
     
         public virtual ICollection<FacilitiesForRoom> FacilitiesForRooms { get; set; }
         public virtual Owner Owner { get; set; }
-        public virtual ICollection<Rent> Rents { get; set; }
-        public virtual roominfo roominfo { get; set; }
+        public virtual ICollection<Rentealseat> Rentealseats { get; set; }
+        public virtual Upazila Upazila { get; set; }
     }
 }

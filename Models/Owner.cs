@@ -17,12 +17,12 @@ namespace projectsd.Models
         public Owner()
         {
             this.Rooms = new HashSet<Room>();
+            this.Users = new HashSet<User>();
         }
     
         public int id { get; set; }
-        public Nullable<int> userID { get; set; }
     
-        public virtual User User { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

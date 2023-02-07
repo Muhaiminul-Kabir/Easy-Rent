@@ -12,25 +12,51 @@ namespace projectsd.Controllers
 {
     public class RentsController : Controller
     {
-        private efdbEntities11 db = new efdbEntities11();
+        private efdbEntities2 db = new efdbEntities2();
         List<Models.View.Rent> rents = new List<Models.View.Rent>();
-        Models.View.Rooms room = new Models.View.Rooms();
+        Models.View.Rent room = new Models.View.Rent();
         // GET: /Rents/
+
         public ActionResult Index()
         {
 
-            
-            var lrents = (from p in db.Rents
-                          join e in db.RentInfoes
-                          on p.InfoId equals e.id
+            var fac = (from x in db.Facilities
+                       select x).ToList();
+            List<Models.View.Facilities> facobjl = new List<Models.View.Facilities>();
+
+            foreach (var item in fac)
+            {
+                Models.View.Facilities facobj = new Models.View.Facilities();
+                facobj.id = item.id;
+                facobj.icon = item.icon;
+                facobj.type = item.type;
+                facobjl.Add(facobj);
+            }
+
+            ViewBag.fac = facobjl;
+
+
+
+            var loc = (from c in db.Districts
+
+                       select c.DistrictName
+
+                      ).ToList();
+
+            ViewBag.uiDist = loc;
+
+
+            ViewBag.userid = Session["user"];
+            var lrents = (from p in db.Rentealseats
+                          join x in db.Rooms on p.RoomId equals x.id
                           select new
                           {
-                              cover = e.pic, 
+                              cover = p.pic,
                               ID = p.id,
                               roomno = p.RoomId,
-                              price = e.price,
-                              location = "dkjf",
-                              posted = e.posted,
+                              price = p.price,
+                              location = x.address,
+                              start = p.startdate
                           }
                           ).ToList();
 
@@ -45,70 +71,69 @@ namespace projectsd.Controllers
                 objcvm.ID = item.ID;
                 objcvm.pic = item.cover;
 
-                objcvm.posted = item.posted;
-
+                objcvm.posted = new DateTime();
+                objcvm.startDate = item.start;
                 objcvm.Location = item.location;
-
-
-                 
-
 
                 objcvm.price = item.price;
 
                 rents.Add(objcvm);
 
             }
-            
-            
+
+
             return View(rents);
         }
 
         // GET: /Rents/Details/5
 
-      
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rent rentdb = db.Rents.Find(id);
+            Rentealseat rentdb = db.Rentealseats.Find(id);
             if (rentdb == null)
             {
                 return HttpNotFound();//TO BE DONE: will show a error view
             }
 
 
-            var coverpic = (from d in db.Rents
-                            join c in db.RentInfoes on d.RoomId equals c.id
-                            where d.id == id
-                            select new { cp = c.pic}).FirstOrDefault();
-                             
+            var coverpic = (from d in db.Rentealseats
+                              where d.id == id
+                            select  d.pic).FirstOrDefault();
 
 
-            var roomDetail = (from d in db.Rents
-                             join c in db.Rooms on d.RoomId equals c.id
-                             join s in db.roominfoes on c.infoid equals s.id
-                             where d.id == id
-                             select new
-                             {
-                                 
-                                 roomno = c.id, 
-                                 noOfrooms= s.nofrooms ,
-                                 maxmember = s.maxmembers,
-                                 size = s.sqft,
-                                 at = s.address
-                                 
-                             }).FirstOrDefault();
+
+            var roomDetail = (from d in db.Rentealseats
+                              join c in db.Rooms on d.RoomId equals c.id
+                              where d.id == id
+                              select new
+                              {
+                                  rentid = d.id,
+                                  start = d.startdate,
+                                  roomno = c.id,
+                                  noOfrooms = c.noofrooms,
+                                  maxmember = c.maxmembers,
+                                  price = d.price,
+                                  size = c.sqft,
+                                  at = c.address,
+                                  oner = (from s in db.Users
+                                         where s.OwnerId == c.ownerid
+                                         select s).FirstOrDefault()
+
+                              }).FirstOrDefault();
 
             int? roomno = roomDetail.roomno;
 
-            
 
-            var result = (from item in db.Rents  
-                       where item.id == id  
-                       where item.TenantId != null  
-                       select item).Count();
+
+            var result = (from item in db.Rentealseats
+                          where item.id == id
+                          where item.TenantId != null
+                          select item).Count();
 
 
             var fac = (from d in db.Rooms
@@ -117,7 +142,9 @@ namespace projectsd.Controllers
                        where d.id == roomno
                        select f
                       ).ToList();
-         
+
+
+
             //hierarchy
 
             if (roomDetail == null)
@@ -127,12 +154,20 @@ namespace projectsd.Controllers
             else
             {
 
-                room.pic = coverpic.cp;
+                room.ID = roomDetail.rentid;
+                room.startDate = roomDetail.start;
                 room.maxmembers = roomDetail.maxmember;
                 room.noofrooms = (int?)roomDetail.noOfrooms;
-                room.needmembers = result ;
+                room.needmembers = result;
                 room.Location = roomDetail.at;
                 room.size = roomDetail.size;
+                room.pic = coverpic;
+                room.price = roomDetail.price;
+                room.oname = roomDetail.oner.Name;
+                if ((int?)Session["user"] == roomDetail.oner.id)
+                {
+                    ViewBag.userType = "owner";
+                }
             }
 
             foreach (var items in fac)
@@ -142,115 +177,191 @@ namespace projectsd.Controllers
                 x.type = items.type;
                 room.facilities.Add(x);
             }
-             
 
-            
+
+
             return View(room);
         }
 
-      
+
+        [HttpPost]
+        public ActionResult Index(int? minp,int? maxp,DateTime? start,int? minroom,int? maxroom,
+                                  int? minmem, int? maxmem, int? minsize, int? maxsize)
+        {
+
+            ViewBag.Search = 0;
+            var fac = (from x in db.Facilities
+                       select x).ToList();
+            List<Models.View.Facilities> facobjl = new List<Models.View.Facilities>();
+
+            foreach (var item in fac)
+            {
+                Models.View.Facilities facobj = new Models.View.Facilities();
+                facobj.id = item.id;
+                facobj.icon = item.icon;
+                facobj.type = item.type;
+                facobjl.Add(facobj);
+            }
+
+            ViewBag.fac = facobjl;
+
+
+
+            var loc = (from c in db.Districts
+
+                       select c.DistrictName
+
+                      ).ToList();
+
+            ViewBag.uiDist = loc;
+
+
+            ViewBag.userid = Session["user"];
+            
+
+            if(minp != null && maxp != null && minmem != null && maxmem != null && maxroom != null && minroom != null && minsize != null && maxroom != null ){
+               var lrents = (from p in db.Rentealseats
+                          join x in db.Rooms on p.RoomId equals x.id
+                          where (p.price >= minp && p.price <= maxp) && p.startdate >= start && (x.sqft <= maxsize && x.sqft >= minsize) && (x.maxmembers <= maxmem && x.maxmembers >= minmem) && (x.noofrooms >= minroom && x.noofrooms <= maxroom)
+                         
+                          select new
+                          {
+                              cover = p.pic,
+                              ID = p.id,
+                              roomno = p.RoomId,
+                              price = p.price,
+                              location = x.address,
+                              start = p.startdate
+                          }
+                          ).ToList();
+                ViewBag.Search = lrents.Count();
+               foreach (var item in lrents)
+               {
+
+                   Models.View.Rent objcvm = new Models.View.Rent(); // ViewModel
+
+                   objcvm.ID = item.ID;
+                   objcvm.pic = item.cover;
+
+                   objcvm.startDate = item.start;
+
+                   objcvm.Location = item.location;
+
+                   objcvm.price = item.price;
+
+                   rents.Add(objcvm);
+
+               }
+
+               return View(rents);
+               
+
+            }else{
+               ViewBag.searchError = "yes";
+                
+                var lrents = (from p in db.Rentealseats
+                          join x in db.Rooms on p.RoomId equals x.id
+                          select new
+                          {
+                              cover = p.pic,
+                              ID = p.id,
+                              roomno = p.RoomId,
+                              price = p.price,
+                              location = x.address,
+                              start = p.startdate
+                          }
+                          ).ToList();
+                foreach (var item in lrents)
+                {
+
+                    Models.View.Rent objcvm = new Models.View.Rent(); // ViewModel
+
+                    objcvm.ID = item.ID;
+                    objcvm.pic = item.cover;
+
+                    objcvm.startDate = item.start;
+
+                    objcvm.Location = item.location;
+
+                    objcvm.price = item.price;
+
+                    rents.Add(objcvm);
+
+                }
+
+
+                return View(rents);
+
+
+            }
+
+            
+            
+        }
 
 
 
         // GET: /Rents/Create
         public ActionResult Create()
         {
-            ViewBag.InfoId = new SelectList(db.RentInfoes, "id", "id");
-            ViewBag.RoomId = new SelectList(db.Rooms, "id", "id");
-            ViewBag.TenantId = new SelectList(db.Tenants, "id", "id");
             return View();
         }
+        
+        public ActionResult Requests(int? rentid){
 
-        // POST: /Rents/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,InfoId,RoomId,TenantId")] Rent rent)
-        {
-            if (ModelState.IsValid)
+            
+            Session["rentid"] = rentid;
+            int? user = (int?)Session["user"];
+            if ((int?)Session["user"] == null)
             {
-                db.Rents.Add(rent);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                ViewBag.error = "no";
+                Session["need"] = "1";
+               
+                return RedirectToAction("Login", "User");
+
             }
 
-            ViewBag.InfoId = new SelectList(db.RentInfoes, "id", "id", rent.InfoId);
-            ViewBag.RoomId = new SelectList(db.Rooms, "id", "id", rent.RoomId);
-            ViewBag.TenantId = new SelectList(db.Tenants, "id", "id", rent.TenantId);
-            return View(rent);
-        }
+             var t = new Tenant
+             {
+                 
+             };
+             db.Tenants.Add(t);
 
-        // GET: /Rents/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Rent rent = db.Rents.Find(id);
-            if (rent == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.InfoId = new SelectList(db.RentInfoes, "id", "id", rent.InfoId);
-            ViewBag.RoomId = new SelectList(db.Rooms, "id", "id", rent.RoomId);
-            ViewBag.TenantId = new SelectList(db.Tenants, "id", "id", rent.TenantId);
-            return View(rent);
-        }
+             db.SaveChanges();
 
-        // POST: /Rents/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,InfoId,RoomId,TenantId")] Rent rent)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rent).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.InfoId = new SelectList(db.RentInfoes, "id", "id", rent.InfoId);
-            ViewBag.RoomId = new SelectList(db.Rooms, "id", "id", rent.RoomId);
-            ViewBag.TenantId = new SelectList(db.Tenants, "id", "id", rent.TenantId);
-            return View(rent);
-        }
 
-        // GET: /Rents/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            var req = new Request
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Rent rent = db.Rents.Find(id);
-            if (rent == null)
-            {
-                return HttpNotFound();
-            }
-            return View(rent);
-        }
+                rentid = rentid,
+                tenantid = t.id,
+                date = DateTime.Today
 
-        // POST: /Rents/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Rent rent = db.Rents.Find(id);
-            db.Rents.Remove(rent);
+            };
+           
+                
+            db.Requests.Add(req);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            var u = (from i in db.Users
+                     where i.id == user
+                     select i
+                         ).First();
+            u.Tenantid = t.id;
+            db.SaveChanges();
+
+            
+           
+            
+
+
+            return RedirectToAction("Details","Rents", new { id = rentid});
+
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
+
+    
+
 }

@@ -4,54 +4,49 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2bb42b3284ed470fa7d542a33fe916bc" Name="Diagram1">
-        <EntityTypeShape EntityType="efdbModel.Chatinfo" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Chat" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.FacilitiesForRoom" Width="1.5" PointX="9.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Facility" Width="1.5" PointX="7.5" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Owner" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Payinfo" Width="1.5" PointX="9.75" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Payment" Width="1.5" PointX="12" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.RentInfo" Width="1.5" PointX="7.5" PointY="18.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Rent" Width="1.5" PointX="9.75" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.requestinfo" Width="1.5" PointX="9.75" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Request" Width="1.5" PointX="12" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.reviewinfo" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.reviewofrent" Width="1.5" PointX="12" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Reviewofuser" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.roominfo" Width="1.5" PointX="5.25" PointY="21" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Room" Width="1.5" PointX="7.5" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.Tenant" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.UserAuth" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.UserContact" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.UserProperty" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="efdbModel.User" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
-        <AssociationConnector Association="efdbModel.FK_Chats_Chatinfo" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Chats_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Chats_Users1" ManuallyRouted="false" />
+      <Diagram DiagramId="49840339677f4b82837c963dba7d11e1" Name="Diagram1">
+        <EntityTypeShape EntityType="efdbModel.Auth" Width="1.5" PointX="3.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.bank" Width="1.5" PointX="3.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.District" Width="1.5" PointX="1.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Division" Width="1.5" PointX="1.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.FacilitiesForRoom" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Facility" Width="1.5" PointX="0.75" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Message" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Owner" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Payment" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Rentealseat" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Request" Width="1.5" PointX="8.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.reviewofrent" Width="1.5" PointX="12.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Reviewofuser" Width="1.5" PointX="8.25" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Review" Width="1.5" PointX="10.5" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Room" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.sysdiagram" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Tenant" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.Upazila" Width="1.5" PointX="1.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="efdbModel.User" Width="1.5" PointX="6" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="efdbModel.FK_Users_Auth" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Users_bank" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK__Districts__Divis__5090EFD7" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK__Upazilas__Distri__5555A4F4" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK__Facilitie__facil__2D47B39A" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK__Facilitie__RoomI__2E3BD7D3" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Owners_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Chats_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Chats_Users1" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK_Rooms_Owners" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Payments_Payinfo" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Payments_Rents" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Rents_RentInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Rents_Rooms" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Rents_Tenants" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Requests_Rents" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_reviewofrent_Rents" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Requests_requestinfo" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Users_Owners" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Payments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Payments_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Rentealseats_Rooms" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Rentealseats_Tenants" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Requests_Rentealseats" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK_Requests_Tenants" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Reviewofuser_reviewinfo" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_reviewofrent_Reviews" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK_reviewofrent_Users" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK_Reviewofuser_Users" ManuallyRouted="false" />
         <AssociationConnector Association="efdbModel.FK_Reviewofuser_Users1" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Rooms_roominfo" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_Tenants_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_User_UserAuth" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_User_UserContact" ManuallyRouted="false" />
-        <AssociationConnector Association="efdbModel.FK_User_UserProperties" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Reviews_Reviewofuser" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Rooms_Upazilas" ManuallyRouted="false" />
+        <AssociationConnector Association="efdbModel.FK_Users_Tenants" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

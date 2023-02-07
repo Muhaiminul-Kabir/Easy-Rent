@@ -1,25 +1,45 @@
 ﻿
-@model projectsd.Models.View.Rooms
+@model projectsd.Models.View.Rent
 
 @{
     ViewBag.Title = "Details";
+    var err = ViewBag.err;
+    var bag = ViewBag.userType;
+    
 } 
 <br /><br />
 <br /><br />
 <br />
-<br /><br /><div class=" coverpic my-2"><img src="~/Content/images/coverpic/@Model.pic" alt="Girl in a jacket" width="700" height="600"></div>
+<br /><br />
+@if (err == "err")
+{
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Oh snap!</strong> There was some error sending request.
+    </div>
+
+}
+<div>
+   
+<div class=" coverpic my-2"><img src="~/Content/images/coverpic/@Model.pic" alt="Girl in a jacket" width="700" height="600"></div>
+
+</div>
+
+
+
+
 
 <div id="booking" class="section">
     <div class="section-center">
         <div class="container">
-            
+           
 <br /><br />
 <br /><br />
 <br /><br />
 <br /><br />
 <br />
             <div class="row">
-                <div class="col-md-7 col-md-push-5">
+                <div class="col-md-7 col-md-push-5 ">
                     <h3 class="text-dark border-dark"> Details</h3>
                     <div class="mx-4 my-3">
                         @if (Model.isAvaliable)
@@ -34,98 +54,139 @@
                         <p>Rooms: @Model.noofrooms</p>
                         <p>Members: @Model.needmembers<span>/</span>@Model.maxmembers</p>
                         <p>Rooms: @Model.noofrooms</p>
-                        <p>Address: <span class="font-weight-bold">@Model.Location<span></p>
+                        <p>Address: <span class="font-weight-bold">@Model.Location</span></p>
                         <p>Size: @Model.size<span> sqft</span></p>
                     </div>
+                    @if (bag != "owner")
+                    {
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Review</button>
+
+                    }
+                    else
+                    {
+                         <button type="button" class="btn btn-danger">Delete</button>
+ 
+                    }
                     <br />
                     <br />
-                    <h3 class="text-dark " >Facilities</h3>
-                    
-                        @foreach (var item in Model.facilities)
-                        {
-                            <div class="my-3 d-flex flex-row facilities">
-                                <div class="mx-3 text-dark icon">@Html.Raw(item.icon)</div>
-                                <div class="type text-dark">@item.type</div>
-                            </div>
-                        }
-                        <br />
+                    <h3 class="text-dark ">Facilities</h3>
+
+                    @foreach (var item in Model.facilities)
+                    {
+                        <div class="my-3 d-flex flex-row facilities">
+                            <div class="mx-3 text-dark icon">@Html.Raw(item.icon)</div>
+                            <div class="type text-dark">@item.type</div>
+                        </div>
+                    }
                     <br />
                     <br />
-                   
+                    <br />
+
 
                 </div>
+
                 
-                <div class="fixed-top  py-4 px-4 shadow bg-dark rounded-2 col-md-4 text-white col-md-pull-7" style="margin-left:65%;margin-top:10%">
-                    <div class="booking-form">
-                       @if (Model.isAvaliable)
-                       {
-                            <form>
-                            <div class="form-group">
-                                <span class="form-label">Your Destination</span>
-                                <input class="form-control" type="text" placeholder="Enter a destination or hotel name">
-                            </div>
+                <div class="col-md-4 fixed-top col-md-pull-8 bg-dark font-weight-bold  rounded text-white" style="height: 300px; margin-left: 65%; margin-top: 10%;">
+                    <div class="booking-form my-4">
+                        @if (bag != "owner")
+                        {
+                            if (Model.isAvaliable)
+                            {
+                                 
+                                    
+                                      
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            
+                                                <span class="form-label">Check In</span>
+                                                <label>@Model.startDate</label>
+                                            
+                                        </div>
+                                       
+                                    </div>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Check In</span>
-                                        <input class="form-control" type="date" required>
-                                    </div>
+                                <div class="col-sm-6 fs-3">
+                                    Price : @Model.price
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Check out</span>
-                                        <input class="form-control" type="date" required>
-                                    </div>
-                                </div>
+
                             </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <span class="form-label">Rooms</span>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <span class="form-label">Adults</span>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <span class="form-label">Children</span>
-                                        <select class="form-control">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-btn">
-                                <button class="submit-btn">Request</button>
-                            </div>
-                        </form>
-                       }
-                       else
-                       {
-                        <p class="font-weight-bold">Rented By</p><br />
+                               <br />
+                                    <div class="form-btn align-content-end">
+                                        <button onclick="location.href= '@Url.Action("Requests", "Rents", new { rentid = @Model.ID})'" class="btn btn-success">Request</button>
+                                   </div>
+                                 
+                            }
+                            else
+                            {
+                                <p class="font-weight-bold">Rented By</p><br />
+
+                            }
+                        }
+                        else
+                        {
+                            if (!Model.isAvaliable)
+                            {
+
+                                <p class="font-weight-bold">Rented By</p><br />
+
+                            }
+                            else
+                            {
+                                <p align="center" class="font-weight-bold fs-3 my-5">You own this</p><br />
+
+                            }
                            
-                       }
+                            
+
+                        }
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<h3 class="text-dark border-dark">Hosted by- @Model.oname</h3>
+<br />
+<div class="row gutters-sm">
+    <div class="col-sm-12 mb-3">
+        
+                <i> <h3 class="card-title">Reviews from others</h3></i>
+
+                <div class="card my-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Shihabul islam shuvo</h5>
+                        <p class="mx-3">unhygineic</p>
+                    </div>
+                </div>
+                <div class="card my-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Shihabul islam shuvo</h5>
+                        <p class="mx-3">broken</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content p-4">
+
+            @using (Html.BeginForm())
+            {
+
+                
+                <label for="review" class="form-label mt-4">Review</label>
+                <textarea class="form-control" id="review" rows="3" spellcheck="false"></textarea>
+
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" />
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+
+            }
         </div>
     </div>
 </div>

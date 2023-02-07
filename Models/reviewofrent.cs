@@ -17,8 +17,9 @@ namespace projectsd.Models
         public int id { get; set; }
         public Nullable<int> rentid { get; set; }
         public Nullable<int> reviewerid { get; set; }
+        public Nullable<int> reviewid { get; set; }
     
-        public virtual Rent Rent { get; set; }
+        public virtual Review Review { get; set; }
         public virtual User User { get; set; }
     }
 }

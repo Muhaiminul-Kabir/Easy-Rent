@@ -16,29 +16,37 @@ namespace projectsd.Models
     {
         public User()
         {
-            this.Chats = new HashSet<Chat>();
-            this.Chats1 = new HashSet<Chat>();
-            this.Owners = new HashSet<Owner>();
+            this.Messages = new HashSet<Message>();
+            this.Messages1 = new HashSet<Message>();
+            this.Payments = new HashSet<Payment>();
+            this.Payments1 = new HashSet<Payment>();
             this.reviewofrents = new HashSet<reviewofrent>();
             this.Reviewofusers = new HashSet<Reviewofuser>();
             this.Reviewofusers1 = new HashSet<Reviewofuser>();
-            this.Tenants = new HashSet<Tenant>();
         }
     
         public int id { get; set; }
-        public int PropertiesId { get; set; }
-        public int AuthId { get; set; }
-        public int ContactId { get; set; }
+        public string Email { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public Nullable<int> Rating { get; set; }
+        public string Cell { get; set; }
+        public string Address { get; set; }
+        public Nullable<int> OwnerId { get; set; }
+        public Nullable<int> Tenantid { get; set; }
+        public Nullable<int> AccId { get; set; }
+        public string pic { get; set; }
     
-        public virtual ICollection<Chat> Chats { get; set; }
-        public virtual ICollection<Chat> Chats1 { get; set; }
-        public virtual ICollection<Owner> Owners { get; set; }
+        public virtual Auth Auth { get; set; }
+        public virtual bank bank { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Message> Messages1 { get; set; }
+        public virtual Owner Owner { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<Payment> Payments1 { get; set; }
         public virtual ICollection<reviewofrent> reviewofrents { get; set; }
         public virtual ICollection<Reviewofuser> Reviewofusers { get; set; }
         public virtual ICollection<Reviewofuser> Reviewofusers1 { get; set; }
-        public virtual ICollection<Tenant> Tenants { get; set; }
-        public virtual UserAuth UserAuth { get; set; }
-        public virtual UserContact UserContact { get; set; }
-        public virtual UserProperty UserProperty { get; set; }
+        public virtual Tenant Tenant { get; set; }
     }
 }

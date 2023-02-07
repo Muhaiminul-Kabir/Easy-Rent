@@ -19,3 +19,4 @@ c:\users\asus\documents\visual studio 2013\Projects\projectsd\projectsd\bin\Syst
 c:\users\asus\documents\visual studio 2013\Projects\projectsd\projectsd\bin\System.Web.Mvc.xml
 c:\users\asus\documents\visual studio 2013\Projects\projectsd\projectsd\obj\Debug\projectsd.dll
 c:\users\asus\documents\visual studio 2013\Projects\projectsd\projectsd\obj\Debug\projectsd.pdb
+C:\Users\ASUS\documents\visual studio 2013\Projects\projectsd\projectsd\obj\Debug\projectsd.csprojResolveAssemblyReference.cache

@@ -15,10 +15,12 @@ namespace projectsd.Models
     public partial class Payment
     {
         public int id { get; set; }
-        public Nullable<int> infoid { get; set; }
-        public Nullable<int> rentid { get; set; }
+        public Nullable<int> senderId { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public Nullable<int> amount { get; set; }
+        public Nullable<int> recieverid { get; set; }
     
-        public virtual Payinfo Payinfo { get; set; }
-        public virtual Rent Rent { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

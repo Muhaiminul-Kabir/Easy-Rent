@@ -16,11 +16,11 @@ namespace projectsd.Models
     {
         public int id { get; set; }
         public Nullable<int> userid { get; set; }
-        public Nullable<int> infoid { get; set; }
+        public Nullable<int> reviewid { get; set; }
         public Nullable<int> reviewerid { get; set; }
     
-        public virtual reviewinfo reviewinfo { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
+        public virtual Review Review { get; set; }
     }
 }

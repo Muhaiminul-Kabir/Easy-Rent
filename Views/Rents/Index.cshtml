@@ -2,100 +2,149 @@
 
 @{
     ViewBag.Title = "Index";
+    var dist = ViewBag.uiDist as List<string>;
+    var err = ViewBag.searchError;
+    var fac = ViewBag.fac as List<projectsd.Models.View.Facilities>;
+    var sc = ViewBag.Search;
 }
 <br />
-<h2>Index</h2>
+<br /><br /><br /><br /><br /><br /><br />
 
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search rent" aria-label="Search rent" aria-describedby="button-addon2">
-    
+<button type="button" class="fixed-top  btn btn-success rounded py-2" data-bs-toggle="modal"
+        data-bs-target="#myModal" style=" top:20%;left:90%; width:100px">
+    <i class="fs-3 bi bi-filter"></i>
+</button>
+
+<br />
+@if(err == "yes"){
+    <div class="alert alert-dismissible alert-warning">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <h4 class="alert-heading">Warning!</h4>
+    <p class="mb-0">Filter options can't be empty</p>
 </div>
+}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (sc >= 0 && err != "yes")
+{
+    <p class="text-success fs-3"> @sc results found </p>
+}
 <div class="row">
     @foreach (var item in Model)
-
- 
     {
         <div class="col-lg-4 col-md-12 mb-4">
-        <div class="card hover-zoom">
-            <div class="bg-image hover-zoom "
-                 data-mdb-ripple-color="light">
-                <img src="~/Content/images/coverpic/@item.pic"
-                     class="w-100" />
-                
-            </div>
-            <div class="card-body">
-                
-                    <h5 id="id" class="card-title mb-3">@Html.ActionLink("Rent-"+item.ID,"Details","Rents",new{id = item.ID},null)</h5>
- 
+            <div class="card ">
+                <div class="bg-image hover-zoom " data-mdb-ripple-color="light">
+                    <img src="~/Content/images/coverpic/@item.pic" class="w-100" height="300" />
 
-                <h6 class="mb-3">@item.posted</h6>
-                <h6 class="mb-3">Price: @item.price BDT</h6>
-                 
-                
+                </div>
+                <div class="card-body">
+
+                    <h5 id="id" class="card-title mb-3">
+                        @Html.ActionLink("Rent-" + item.ID, "Details", "Rents", new { id = item.ID }, null)
+                    </h5>
+                    <h6 class="mb-3">@item.Location</h6>
+                    <h6 class="mb-3">@item.startDate</h6>
+                    <h6 class="mb-3">Price: @item.price BDT</h6>
+
+
+                </div>
             </div>
         </div>
-    </div> 
     }
- 
+
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-5" style="">
+
+            @using (Html.BeginForm())
+            {
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Min</label>
+                        <input class="form-control" placeholder="$0" name="minp" type="number">
+                    </div>
+                    <div class="form-group text-right col-md-6">
+                        <label>Max</label>
+                        <input class="form-control" placeholder="$1,0000" name="maxp" type="number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Min</label>
+                        <input class="form-control" name="minroom" placeholder="0 rooms" type="number">
+                    </div>
+                    <div class="form-group text-right col-md-6">
+                        <label>Max</label>
+                        <input class="form-control" name="maxroom" placeholder="10 rooms" type="number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Min</label>
+                        <input class="form-control" name="minmem" placeholder="0 people" type="number">
+                    </div>
+                    <div class="form-group text-right col-md-6">
+                        <label>Max</label>
+                        <input class="form-control" name="maxmem" placeholder="10 people" type="number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Min</label>
+                        <input class="form-control" name="minsize" placeholder="0 sqft" type="number">
+                    </div>
+                    <div class="form-group text-right col-md-6">
+                        <label>Max</label>
+                        <input class="form-control" name="maxsize" placeholder="1200 sqft" type="number">
+                    </div>
+                </div>
+
+
+
+
+                <label for="start" class=" form-label">Strats from</label>
+
+                <input type="date" class="form-control" name="start" value="2018-07-22" min="2018-01-01"
+                       max="2035-12-31">
+                <br />
+
+
+                <label for="exampleSelect1" class=" form-label mt-4">District</label>
+                <select class="form-select form-control" id="exampleSelect1" name="district">
+                    @foreach (var item in dist)
+                    {
+                        <option>@item</option>
+                    }
+
+                </select>
+
+                
+
+
+                <br />
+
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" />
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+
+            }
+        </div>
+    </div>
 </div>
 
 @section scripts{
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
 
-    var url = "@Url.Action("Details","RentsController")";
-    var id = $("#id").val.toString();
-    var x = id.split("-");
-    var model = { ID: x,Price :234, Location:"Detroit"};
-
-    $.post(url, model, function(res){
-        //res contains the markup returned by the partial view
-        //You probably want to set that to some Div.
-        $("#SomeDivToShowTheResult").html(res);
-    });
-
-
-
-
-
-
-    $(function () {
-        GetCustomers();
-        $("#txtCustomerName").keyup(function () {
-            GetCustomers();
-        });
-    });
-    function GetCustomers() {
-        var customerName = $.trim($("#txtCustomerName").val());
-        $.ajax({
-            type: "POST",
-            url: "/Home/SearchCustomers",
-            data: "{customerName:'" + customerName + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (customers) {
-                var table = $("#tblCustomers");
-                table.find("tr:not(:first)").remove();
-                $.each(customers, function (i, customer) {
-                    var table = $("#tblCustomers");
-                    var row = table[0].insertRow(-1);
-                    $(row).append("<td />");
-                    $(row).find("td").eq(0).html(customer.CustomerID);
-                    $(row).append("<td />");
-                    $(row).find("td").eq(1).html(customer.ContactName);
-                    $(row).append("<td />");
-                    $(row).find("td").eq(2).html(customer.City);
-                    $(row).append("<td />");
-                    $(row).find("td").eq(3).html(customer.Country);
-                });
-            }
-        });
-    }
     </script>
 
 }

@@ -16,15 +16,15 @@ namespace projectsd.Models
     {
         public Tenant()
         {
-            this.Rents = new HashSet<Rent>();
+            this.Rentealseats = new HashSet<Rentealseat>();
             this.Requests = new HashSet<Request>();
+            this.Users = new HashSet<User>();
         }
     
         public int id { get; set; }
-        public Nullable<int> userId { get; set; }
     
-        public virtual ICollection<Rent> Rents { get; set; }
+        public virtual ICollection<Rentealseat> Rentealseats { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

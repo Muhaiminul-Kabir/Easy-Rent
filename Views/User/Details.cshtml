@@ -1,0 +1,212 @@
+﻿@model projectsd.Models.View.User
+
+@{
+
+    //details of visitor mode
+    ViewBag.Title = "Details";
+    var type = ViewBag.userType;
+    var uin = (int?)Session["user"];
+
+}
+
+<h2>Details</h2>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="main-body">
+
+
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="~/Content/images/coverpic/@Model.pic" alt="Admin" class="rounded-circle"
+                                 width="150" height="150">
+                            <div class="mt-3">
+                                <h4>@Model.name</h4>
+
+                                <div class="mb-3">
+                                    @if (Model.isOwner)
+                                    { <span class="badge rounded-pill px-3 py-2 bg-primary">Owner</span>
+                                    }
+                                    @if (Model.isTenant)
+                                    { <span class="badge rounded-pill px-3 py-2 bg-primary">Tenant</span>
+                                    }
+                                </div>
+                                @if (Model.id != uin)
+                                {
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#myModal">
+                                    Rate
+                                </button>
+
+                                <button class="btn btn-outline-primary">Message</button>
+                                }
+                                else
+                                {
+                                    <button onclick="location.href='@Url.Action("Logout", "User")'" class=" btn btn-danger">Logout</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                                <h5>
+                                Rating <span class="fs-4 px-3 mx-4 badge rounded-pill bg-primary">
+                                    <i class="bi bi-star"></i> @Model.rating
+                                </span>
+                            </h5>
+                            <div>
+                                <i class="bi bi-user"></i>1,050,008 total
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Full Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.name
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Age</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.age
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.email
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.cell
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Address</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.address
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Gender</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.gender
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="btn btn-info " target="__blank"
+                                   href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i>
+                                    <h3 class="card-title">Reviews from others</h3>
+                                </i>
+
+                                <div class="card my-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Shihabul islam shuvo</h5>
+                                        <p class="mx-3">Great guy. Helpful</p>
+                                    </div>
+                                </div>
+                                <div class="card my-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Shihabul islam shuvo</h5>
+                                        <p class="mx-3">Great guy. Helpful</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content p-4">
+
+            @using (Html.BeginForm())
+            {
+
+                <label for="rating" class="form-label mt-4">Rate</label>
+                <select class="form-select" name="rating" id="rating">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <label for="review" class="form-label mt-4">Review</label>
+                <textarea class="form-control" id="review" rows="3" spellcheck="false"></textarea>
+
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" />
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+
+            }
+        </div>
+    </div>
+</div>
