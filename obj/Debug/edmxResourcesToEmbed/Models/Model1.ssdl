@@ -96,8 +96,9 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="rentid" Type="int" />
-    <Property Name="date" Type="date" />
+    <Property Name="date" Type="datetime" />
     <Property Name="senderid" Type="int" />
+    <Property Name="stat" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="reviewofrent">
     <Key>

@@ -13,7 +13,7 @@ namespace projectsd.Models.View
         public string pic { get; set; }
         public DateTime? startDate { get; set; }
         public DateTime? expiryDate { get; set; }
-        public int tenantid { get; set; }
+        public Models.View.User tenant { get; set; }// object here
         public bool isAvaliable = true;
         public int totalReq { get; set; }
         public List<Models.View.Requests> reqs = new List<Models.View.Requests>();

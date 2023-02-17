@@ -37,6 +37,7 @@ namespace projectsd.Models
         public Nullable<int> Tenantid { get; set; }
         public Nullable<int> AccId { get; set; }
         public string pic { get; set; }
+        public string VID { get; set; }
     
         public virtual Auth Auth { get; set; }
         public virtual bank bank { get; set; }

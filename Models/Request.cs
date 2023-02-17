@@ -18,6 +18,7 @@ namespace projectsd.Models
         public Nullable<int> rentid { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public Nullable<int> senderid { get; set; }
+        public string stat { get; set; }
     
         public virtual Rentealseat Rentealseat { get; set; }
         public virtual User User { get; set; }

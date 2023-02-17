@@ -104,6 +104,7 @@
     <EntitySetMapping Name="Requests">
       <EntityTypeMapping TypeName="efdbModel.Request">
         <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="stat" ColumnName="stat" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="rentid" ColumnName="rentid" />
           <ScalarProperty Name="date" ColumnName="date" />

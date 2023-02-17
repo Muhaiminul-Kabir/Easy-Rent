@@ -49,6 +49,7 @@ namespace projectsd.Controllers
             ViewBag.userid = Session["user"];
             var lrents = (from p in db.Rentealseats
                           join x in db.Rooms on p.RoomId equals x.id
+                          where p.TenantId == null
                           select new
                           {
                               cover = p.pic,
@@ -91,6 +92,8 @@ namespace projectsd.Controllers
         public ActionResult Details(int? id)
         {
 
+
+            Session["rent"] = id;
             var uid = (int?)Session["user"];
             if (id == null)
             {
@@ -102,29 +105,32 @@ namespace projectsd.Controllers
                 return HttpNotFound();//TO BE DONE: will show a error view
             }
 
+            // for visiting user checking requests for this rent 
             var chek = (from i in db.Requests
                         join j in db.Rentealseats on i.rentid equals j.id
                         
                         where j.id == id && i.senderid == uid
                         select i).ToList();
 
+            //if visiting userhas request of this rent
             if(chek.Count() == 1){
                 ViewBag.hasReq = "has";
                 ViewBag.dateReq = chek[0].date;
             }
 
-
+            // picture of rent
             var coverpic = (from d in db.Rentealseats
                               where d.id == id
                             select  d.pic).FirstOrDefault();
 
 
-
+            //every details available for this rent
             var roomDetail = (from d in db.Rentealseats
                               join c in db.Rooms on d.RoomId equals c.id
                               where d.id == id
                               select new
                               {
+                                  tenantid = d.TenantId,
                                   rentid = d.id,
                                   start = d.startdate,
                                   roomno = c.id,
@@ -135,10 +141,16 @@ namespace projectsd.Controllers
                                   at = c.address,
                                   oner = (from s in db.Users
                                          where s.OwnerId == c.ownerid
-                                         select s).FirstOrDefault()
+                                         select s).FirstOrDefault(),
+                                  tenant = (from s in db.Users
+                                            where s.Tenantid == d.TenantId
+                                            select s).FirstOrDefault()
+                                   
 
                               }).FirstOrDefault();
 
+
+            // room no of rent
             int? roomno = roomDetail.roomno;
 
 
@@ -158,7 +170,14 @@ namespace projectsd.Controllers
            // return Content(id.ToString());
             var reqs = (from i in db.Requests
                         where i.rentid == id
+                        where i.stat == "pending"
                         select i).ToList();
+
+        // check if total requests == 0
+            if(reqs.Count() <= 0){
+                ViewBag.rentReqCnt = 0;
+            }
+            
 
 
          //   return Content(reqs.Count().ToString());
@@ -180,6 +199,7 @@ namespace projectsd.Controllers
                 room.size = roomDetail.size;
                 room.pic = coverpic;
                 room.price = roomDetail.price;
+                if(roomDetail.tenantid != null ){room.isAvaliable = false;}
                 
                 Models.View.User tn = new Models.View.User();
 
@@ -190,6 +210,18 @@ namespace projectsd.Controllers
                     tn.pic = roomDetail.oner.pic;
                     tn.rating = roomDetail.oner.Rating;
 
+
+                    Models.View.User tnt = new Models.View.User();
+
+                    tnt.id = roomDetail.tenant.id;
+
+                    tnt.name = roomDetail.tenant.Name;
+
+                    tnt.pic = roomDetail.tenant.pic;
+                    tnt.rating = roomDetail.tenant.Rating;
+
+
+                    room.tenant = tnt;
                     room.owner = tn;
 
                     foreach (var item in reqs)
@@ -200,6 +232,9 @@ namespace projectsd.Controllers
                                          where i.id == item.senderid
                                          select i).FirstOrDefault();
 
+
+
+                        rq.reqid = item.id;
                         rq.sender = new Models.View.User();
 
                         rq.sender.id = sender.id;
@@ -239,10 +274,14 @@ namespace projectsd.Controllers
         public ActionResult Index(int? minp,int? maxp,DateTime? start,int? minroom,int? maxroom,
                                   int? minmem, int? maxmem, int? minsize, int? maxsize,string district)
         {
-
+            //intialize with zero
             ViewBag.Search = 0;
+
+            //geting dataset from Facility table in database 
             var fac = (from x in db.Facilities
                        select x).ToList();
+
+            // facilities data set to viewmodel insertion
             List<Models.View.Facilities> facobjl = new List<Models.View.Facilities>();
 
             foreach (var item in fac)
@@ -254,27 +293,30 @@ namespace projectsd.Controllers
                 facobjl.Add(facobj);
             }
 
+            //facilities list to viewbag
             ViewBag.fac = facobjl;
 
 
-
+            // getting datasets of districts from database
             var loc = (from c in db.Districts
 
                        select c.DistrictName
 
                       ).ToList();
 
+            //district list to viewbag
             ViewBag.uiDist = loc;
 
-
+            //storing current user for future use
             ViewBag.userid = Session["user"];
             
-
+            //checking fo NULL value
             if(minp != null && maxp != null && minmem != null && maxmem != null && maxroom != null && minroom != null && minsize != null && maxroom != null ){
-               var lrents = (from p in db.Rentealseats
+               //getting filtered data sets
+                var lrents = (from p in db.Rentealseats
                           join x in db.Rooms on p.RoomId equals x.id
                           where (p.price >= minp && p.price <= maxp) && p.startdate >= start && (x.sqft <= maxsize && x.sqft >= minsize) && (x.maxmembers <= maxmem && x.maxmembers >= minmem) && (x.noofrooms >= minroom && x.noofrooms <= maxroom) && x.upname == district
-                         
+                          where p.TenantId == null
                           select new
                           {
                               cover = p.pic,
@@ -285,7 +327,10 @@ namespace projectsd.Controllers
                               start = p.startdate
                           }
                           ).ToList();
+                //total search results
                 ViewBag.Search = lrents.Count();
+
+                //assigning list values to viewmodel
                foreach (var item in lrents)
                {
 
@@ -308,8 +353,10 @@ namespace projectsd.Controllers
                
 
             }else{
+                //setting conditional variable for search error in filter
                ViewBag.searchError = "yes";
                 
+                //getting datasets from database
                 var lrents = (from p in db.Rentealseats
                           join x in db.Rooms on p.RoomId equals x.id
                           select new
@@ -322,6 +369,8 @@ namespace projectsd.Controllers
                               start = p.startdate
                           }
                           ).ToList();
+                
+                //assigning list values to viewmodel
                 foreach (var item in lrents)
                 {
 
@@ -357,15 +406,22 @@ namespace projectsd.Controllers
         {
             return View();
         }
+
+
+
         
         public ActionResult Requests(int? rentid){
 
-            
+            //storing rent id in session for future use
             Session["rentid"] = rentid;
+
+            //retriving looged user id
             int? user = (int?)Session["user"];
+
+            //if user not logged in then please log in
             if ((int?)Session["user"] == null)
             {
-                
+                //this are for error message showing
                 ViewBag.error = "no";
                 Session["need"] = "1";
                
@@ -373,7 +429,9 @@ namespace projectsd.Controllers
 
             }
 
-             var t = new Tenant
+            // create a tenant data for current user because he has requested for a rent
+            // this portion will add data to tenant table 
+            var t = new Tenant
              {
                  
              };
@@ -381,12 +439,13 @@ namespace projectsd.Controllers
 
              db.SaveChanges();
 
-
+            //inserting request data in the database
             var req = new Request
             {
                 rentid = rentid,
                 senderid = user,
-                date = DateTime.Today
+                stat = "pending",
+                date = DateTime.Now
 
             };
            
@@ -394,6 +453,7 @@ namespace projectsd.Controllers
             db.Requests.Add(req);
             db.SaveChanges();
 
+            // get tenant id and insert it in Users table
             var u = (from i in db.Users
                      where i.id == user
                      select i
@@ -405,7 +465,7 @@ namespace projectsd.Controllers
            
             
 
-
+            // redirect without any object[direct to method]
             return RedirectToAction("Details","Rents", new { id = rentid});
 
         }

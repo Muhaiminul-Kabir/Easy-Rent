@@ -68,10 +68,10 @@ namespace projectsd.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create( string name,string cell, string password, string gender, string email,string address, string propic,string start)
+        public ActionResult Create( string name,string cell,string vid, string password, string gender, string email,string address, string propic,string start)
         {
             
-            if (email != "" && password != "")
+            if (email != "" && password != "" && vid != "")
             {
 
                 uservm.email = email;
@@ -81,7 +81,7 @@ namespace projectsd.Controllers
                 uservm.name = name;
                 uservm.address = address;
                 uservm.pic = propic;
-
+                
 
                 var tw = new Auth
                 {
@@ -108,8 +108,8 @@ namespace projectsd.Controllers
                     Cell = uservm.cell,
                     Gender = uservm.gender,
                     Email = uservm.email,
-                    pic = uservm.pic
-
+                    pic = uservm.pic,
+                    VID = vid
                 };
 
                 db.Users.Add(t);
@@ -127,10 +127,16 @@ namespace projectsd.Controllers
 
                 return RedirectToAction("Login", "User");
             }
+            else if (vid == "")
+            {
+                ViewBag.error = "zyxi";
+            }
             else
             {
                 ViewBag.error = "zyx";
             }
+
+
 
             //IFERROR
             return View(); 
@@ -178,6 +184,7 @@ namespace projectsd.Controllers
                 if(x != null){
                     
                    if(x.pass == pass){
+                       Session["email"] = email;
                        Session["log"] = "in";
                        Session["pic"] = x.pic;
                         

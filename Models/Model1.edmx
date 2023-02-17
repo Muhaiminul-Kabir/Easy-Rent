@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="efdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="efdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Auth">
           <Key>
             <PropertyRef Name="email" />
@@ -101,8 +101,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="rentid" Type="int" />
-          <Property Name="date" Type="date" />
+          <Property Name="date" Type="datetime" />
           <Property Name="senderid" Type="int" />
+          <Property Name="stat" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="reviewofrent">
           <Key>
@@ -186,6 +187,7 @@
           <Property Name="Tenantid" Type="int" />
           <Property Name="AccId" Type="int" />
           <Property Name="pic" Type="varchar" MaxLength="255" />
+          <Property Name="VID" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK__Districts__Divis__5090EFD7">
           <End Role="Division" Type="Self.Division" Multiplicity="1" />
@@ -591,8 +593,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="efdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -709,10 +710,11 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="rentid" Type="Int32" />
-          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="senderid" Type="Int32" />
           <NavigationProperty Name="Rentealseat" Relationship="Self.FK_Requests_Rentealseats" FromRole="Requests" ToRole="Rentealseats" />
           <NavigationProperty Name="User" Relationship="Self.FK__Requests__sender__12E8C319" FromRole="Requests" ToRole="Users" />
+          <Property Name="stat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="reviewofrent">
           <Key>
@@ -821,6 +823,7 @@
           <NavigationProperty Name="Reviewofusers" Relationship="Self.FK_Reviewofuser_Users" FromRole="Users" ToRole="Reviewofuser" />
           <NavigationProperty Name="Reviewofusers1" Relationship="Self.FK_Reviewofuser_Users1" FromRole="Users" ToRole="Reviewofuser" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_Users_Tenants" FromRole="Users" ToRole="Tenants" />
+          <Property Name="VID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Users_Auth">
           <End Role="Auth" Type="Self.Auth" Multiplicity="0..1" />
@@ -1345,6 +1348,7 @@
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="efdbModel.Request">
               <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="stat" ColumnName="stat" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="rentid" ColumnName="rentid" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -1429,6 +1433,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="efdbModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="VID" ColumnName="VID" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
