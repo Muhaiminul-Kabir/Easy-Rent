@@ -29,10 +29,10 @@ namespace projectsd.Models
         public string zone { get; set; }
         public Nullable<int> upazilaid { get; set; }
         public Nullable<int> ownerid { get; set; }
+        public string upname { get; set; }
     
         public virtual ICollection<FacilitiesForRoom> FacilitiesForRooms { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Rentealseat> Rentealseats { get; set; }
-        public virtual Upazila Upazila { get; set; }
     }
 }

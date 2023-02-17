@@ -13,7 +13,7 @@ namespace projectsd.Controllers
 {
     public class UserController : Controller
     {
-        private efdbEntities2 db = new efdbEntities2();
+        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
      
          Models.View.User uservm = new Models.View.User();
         // GET: /User/

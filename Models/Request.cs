@@ -15,11 +15,11 @@ namespace projectsd.Models
     public partial class Request
     {
         public int id { get; set; }
-        public Nullable<int> tenantid { get; set; }
         public Nullable<int> rentid { get; set; }
         public Nullable<System.DateTime> date { get; set; }
+        public Nullable<int> senderid { get; set; }
     
         public virtual Rentealseat Rentealseat { get; set; }
-        public virtual Tenant Tenant { get; set; }
+        public virtual User User { get; set; }
     }
 }

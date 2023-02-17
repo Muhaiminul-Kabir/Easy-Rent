@@ -1,5 +1,48 @@
-﻿ <br />
+﻿@model IEnumerable<projectsd.Models.View.Requests>
+
+
+@{
+    var cnt = ViewBag.rqcnt;
+}
+
+
+ <br />
 <br /><br /><br /><br /><br />
-    <div> 
-        <h4>You have no request pending</h4>
-    </div> 
+<h2>Requests</h2>
+ @if (cnt != 0)
+{
+   <div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="d-flex flex-column">
+       @foreach (var item in Model)
+       {
+            <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Rent: Rent-00<span>@item.ID</span></h5>
+            <p class="card-text">Sent: @item.date</p>
+            <p class="card-text">Status: @item.status</p>
+          </div>
+          <div class="card-footer" align="right">
+            @if(item.status == "pending"){
+                <button type="button" class="btn btn-danger" onclick="cancelCard(this)">Cancel</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-danger" onclick="cancelCard(this)">Delete</button>
+                
+            }
+         </div>
+        </div>
+       }
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+}
+else
+{
+    <h1 class="text-danger">You have no requests pending</h1>
+}

@@ -20,6 +20,7 @@ namespace projectsd.Models
             this.Messages1 = new HashSet<Message>();
             this.Payments = new HashSet<Payment>();
             this.Payments1 = new HashSet<Payment>();
+            this.Requests = new HashSet<Request>();
             this.reviewofrents = new HashSet<reviewofrent>();
             this.Reviewofusers = new HashSet<Reviewofuser>();
             this.Reviewofusers1 = new HashSet<Reviewofuser>();
@@ -44,6 +45,7 @@ namespace projectsd.Models
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Payment> Payments1 { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<reviewofrent> reviewofrents { get; set; }
         public virtual ICollection<Reviewofuser> Reviewofusers { get; set; }
         public virtual ICollection<Reviewofuser> Reviewofusers1 { get; set; }

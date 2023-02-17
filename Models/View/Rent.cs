@@ -16,5 +16,7 @@ namespace projectsd.Models.View
         public int tenantid { get; set; }
         public bool isAvaliable = true;
         public int totalReq { get; set; }
+        public List<Models.View.Requests> reqs = new List<Models.View.Requests>();
+        
     }
 }

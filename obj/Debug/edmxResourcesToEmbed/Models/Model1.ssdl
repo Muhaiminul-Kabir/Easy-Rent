@@ -95,9 +95,9 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="tenantid" Type="int" />
     <Property Name="rentid" Type="int" />
     <Property Name="date" Type="date" />
+    <Property Name="senderid" Type="int" />
   </EntityType>
   <EntityType Name="reviewofrent">
     <Key>
@@ -138,6 +138,7 @@
     <Property Name="zone" Type="varchar" MaxLength="255" />
     <Property Name="upazilaid" Type="int" />
     <Property Name="ownerid" Type="int" />
+    <Property Name="upname" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -214,6 +215,18 @@
       </Principal>
       <Dependent Role="FacilitiesForRoom">
         <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__sender__12E8C319">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="senderid" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -313,18 +326,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Requests_Tenants">
-    <End Role="Tenants" Type="Self.Tenants" Multiplicity="0..1" />
-    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tenants">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Requests">
-        <PropertyRef Name="tenantid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_reviewofrent_Reviews">
     <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
     <End Role="reviewofrent" Type="Self.reviewofrent" Multiplicity="*" />
@@ -397,18 +398,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Rooms_Upazilas">
-    <End Role="Upazilas" Type="Self.Upazilas" Multiplicity="0..1" />
-    <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Upazilas">
-        <PropertyRef Name="UpazilaId" />
-      </Principal>
-      <Dependent Role="Rooms">
-        <PropertyRef Name="upazilaid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Users_Auth">
     <End Role="Auth" Type="Self.Auth" Multiplicity="0..1" />
     <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -457,6 +446,37 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="efdbModelStoreContainer">
     <EntitySet Name="Auth" EntityType="Self.Auth" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="bank" EntityType="Self.bank" Schema="dbo" store:Type="Tables" />
@@ -488,6 +508,10 @@
     <AssociationSet Name="FK__Facilitie__RoomI__2E3BD7D3" Association="Self.FK__Facilitie__RoomI__2E3BD7D3">
       <End Role="Rooms" EntitySet="Rooms" />
       <End Role="FacilitiesForRoom" EntitySet="FacilitiesForRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__sender__12E8C319" Association="Self.FK__Requests__sender__12E8C319">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Requests" EntitySet="Requests" />
     </AssociationSet>
     <AssociationSet Name="FK__Upazilas__Distri__5555A4F4" Association="Self.FK__Upazilas__Distri__5555A4F4">
       <End Role="Districts" EntitySet="Districts" />
@@ -521,10 +545,6 @@
       <End Role="Rentealseats" EntitySet="Rentealseats" />
       <End Role="Requests" EntitySet="Requests" />
     </AssociationSet>
-    <AssociationSet Name="FK_Requests_Tenants" Association="Self.FK_Requests_Tenants">
-      <End Role="Tenants" EntitySet="Tenants" />
-      <End Role="Requests" EntitySet="Requests" />
-    </AssociationSet>
     <AssociationSet Name="FK_reviewofrent_Reviews" Association="Self.FK_reviewofrent_Reviews">
       <End Role="Reviews" EntitySet="Reviews" />
       <End Role="reviewofrent" EntitySet="reviewofrent" />
@@ -547,10 +567,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Rooms_Owners" Association="Self.FK_Rooms_Owners">
       <End Role="Owners" EntitySet="Owners" />
-      <End Role="Rooms" EntitySet="Rooms" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Rooms_Upazilas" Association="Self.FK_Rooms_Upazilas">
-      <End Role="Upazilas" EntitySet="Upazilas" />
       <End Role="Rooms" EntitySet="Rooms" />
     </AssociationSet>
     <AssociationSet Name="FK_Users_Auth" Association="Self.FK_Users_Auth">

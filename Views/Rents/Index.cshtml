@@ -40,7 +40,7 @@
                 <div class="card-body">
 
                     <h5 id="id" class="card-title mb-3">
-                        @Html.ActionLink("Rent-" + item.ID, "Details", "Rents", new { id = item.ID }, null)
+                        @Html.ActionLink("Rent-00" + item.ID, "Details", "Rents", new { id = item.ID }, null)
                     </h5>
                     <h6 class="mb-3">@item.Location</h6>
                     <h6 class="mb-3">@item.startDate</h6>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group text-right col-md-6">
                         <label>Max</label>
-                        <input class="form-control" placeholder="$1,0000" name="maxp" type="number">
+                        <input class="form-control" placeholder="$10,000" name="maxp" type="number">
                     </div>
                 </div>
                 <div class="form-row">
@@ -112,7 +112,7 @@
                        max="2035-12-31">
                 <br />
 
-
+                
                 <label for="exampleSelect1" class=" form-label mt-4">District</label>
                 <select class="form-select form-control" id="exampleSelect1" name="district">
                     @foreach (var item in dist)
@@ -121,7 +121,6 @@
                     }
 
                 </select>
-
                 
 
 

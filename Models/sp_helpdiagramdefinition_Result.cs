@@ -10,19 +10,10 @@
 namespace projectsd.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Tenant
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public Tenant()
-        {
-            this.Rentealseats = new HashSet<Rentealseat>();
-            this.Users = new HashSet<User>();
-        }
-    
-        public int id { get; set; }
-    
-        public virtual ICollection<Rentealseat> Rentealseats { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

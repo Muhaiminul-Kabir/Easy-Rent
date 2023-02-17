@@ -112,11 +112,11 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="tenantid" Type="Int32" />
     <Property Name="rentid" Type="Int32" />
     <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="senderid" Type="Int32" />
     <NavigationProperty Name="Rentealseat" Relationship="Self.FK_Requests_Rentealseats" FromRole="Requests" ToRole="Rentealseats" />
-    <NavigationProperty Name="Tenant" Relationship="Self.FK_Requests_Tenants" FromRole="Requests" ToRole="Tenants" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Requests__sender__12E8C319" FromRole="Requests" ToRole="Users" />
   </EntityType>
   <EntityType Name="reviewofrent">
     <Key>
@@ -164,10 +164,10 @@
     <Property Name="zone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="upazilaid" Type="Int32" />
     <Property Name="ownerid" Type="Int32" />
+    <Property Name="upname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="FacilitiesForRooms" Relationship="Self.FK__Facilitie__RoomI__2E3BD7D3" FromRole="Rooms" ToRole="FacilitiesForRoom" />
     <NavigationProperty Name="Owner" Relationship="Self.FK_Rooms_Owners" FromRole="Rooms" ToRole="Owners" />
     <NavigationProperty Name="Rentealseats" Relationship="Self.FK_Rentealseats_Rooms" FromRole="Rooms" ToRole="Rentealseats" />
-    <NavigationProperty Name="Upazila" Relationship="Self.FK_Rooms_Upazilas" FromRole="Rooms" ToRole="Upazilas" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -185,7 +185,6 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="Rentealseats" Relationship="Self.FK_Rentealseats_Tenants" FromRole="Tenants" ToRole="Rentealseats" />
-    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Tenants" FromRole="Tenants" ToRole="Requests" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Users_Tenants" FromRole="Tenants" ToRole="Users" />
   </EntityType>
   <EntityType Name="Upazila">
@@ -198,7 +197,6 @@
     <Property Name="bn_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="url" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="District" Relationship="Self.FK__Upazilas__Distri__5555A4F4" FromRole="Upazilas" ToRole="Districts" />
-    <NavigationProperty Name="Rooms" Relationship="Self.FK_Rooms_Upazilas" FromRole="Upazilas" ToRole="Rooms" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -222,6 +220,7 @@
     <NavigationProperty Name="Owner" Relationship="Self.FK_Users_Owners" FromRole="Users" ToRole="Owners" />
     <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Users" FromRole="Users" ToRole="Payments" />
     <NavigationProperty Name="Payments1" Relationship="Self.FK_Payments_Users1" FromRole="Users" ToRole="Payments" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__sender__12E8C319" FromRole="Users" ToRole="Requests" />
     <NavigationProperty Name="reviewofrents" Relationship="Self.FK_reviewofrent_Users" FromRole="Users" ToRole="reviewofrent" />
     <NavigationProperty Name="Reviewofusers" Relationship="Self.FK_Reviewofuser_Users" FromRole="Users" ToRole="Reviewofuser" />
     <NavigationProperty Name="Reviewofusers1" Relationship="Self.FK_Reviewofuser_Users1" FromRole="Users" ToRole="Reviewofuser" />
@@ -407,15 +406,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Requests_Tenants">
-    <End Role="Tenants" Type="Self.Tenant" Multiplicity="0..1" />
+  <Association Name="FK__Requests__sender__12E8C319">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
     <End Role="Requests" Type="Self.Request" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tenants">
+      <Principal Role="Users">
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="Requests">
-        <PropertyRef Name="tenantid" />
+        <PropertyRef Name="senderid" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -479,18 +478,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Rooms_Upazilas">
-    <End Role="Upazilas" Type="Self.Upazila" Multiplicity="0..1" />
-    <End Role="Rooms" Type="Self.Room" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Upazilas">
-        <PropertyRef Name="UpazilaId" />
-      </Principal>
-      <Dependent Role="Rooms">
-        <PropertyRef Name="upazilaid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Users_Tenants">
     <End Role="Tenants" Type="Self.Tenant" Multiplicity="0..1" />
     <End Role="Users" Type="Self.User" Multiplicity="*" />
@@ -503,7 +490,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="efdbEntities2" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="efdbEntitiesNirjon" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Auths" EntityType="Self.Auth" />
     <EntitySet Name="banks" EntityType="Self.bank" />
     <EntitySet Name="Districts" EntityType="Self.District" />
@@ -583,8 +570,8 @@
       <End Role="Rentealseats" EntitySet="Rentealseats" />
       <End Role="Requests" EntitySet="Requests" />
     </AssociationSet>
-    <AssociationSet Name="FK_Requests_Tenants" Association="Self.FK_Requests_Tenants">
-      <End Role="Tenants" EntitySet="Tenants" />
+    <AssociationSet Name="FK__Requests__sender__12E8C319" Association="Self.FK__Requests__sender__12E8C319">
+      <End Role="Users" EntitySet="Users" />
       <End Role="Requests" EntitySet="Requests" />
     </AssociationSet>
     <AssociationSet Name="FK_reviewofrent_Reviews" Association="Self.FK_reviewofrent_Reviews">
@@ -607,13 +594,50 @@
       <End Role="Reviewofuser" EntitySet="Reviewofusers" />
       <End Role="Reviews" EntitySet="Reviews" />
     </AssociationSet>
-    <AssociationSet Name="FK_Rooms_Upazilas" Association="Self.FK_Rooms_Upazilas">
-      <End Role="Upazilas" EntitySet="Upazilas" />
-      <End Role="Rooms" EntitySet="Rooms" />
-    </AssociationSet>
     <AssociationSet Name="FK_Users_Tenants" Association="Self.FK_Users_Tenants">
       <End Role="Tenants" EntitySet="Tenants" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(efdbModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(efdbModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
   </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
 </Schema>

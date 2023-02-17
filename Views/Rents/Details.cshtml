@@ -5,6 +5,8 @@
     ViewBag.Title = "Details";
     var err = ViewBag.err;
     var bag = ViewBag.userType;
+    var hasReq = ViewBag.hasReq;
+    var dateReq = ViewBag.dateReq;
     
 } 
 <br /><br />
@@ -81,10 +83,50 @@
                     <br />
                     <br />
                     <br />
+                    @if (bag == "owner")
+                    {
+                        <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="" style="
+  overflow-y: scroll; height:500px; /* Enable horizontal scrolling */">
 
+            <!-- Card list -->
+            @foreach (var item in Model.reqs)
+            {
+                <div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <img src="~/Content/images/coverpic/@item.sender.pic" alt="Avatar" class="mr-3" style="height: 100px; width: 100px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = item.sender.id})'">
+            <div>
+                <h3 class="card-title mb-0">@item.sender.name</h3>
+    <p class="my-2">
+        Sent - @item.date
+    </p>
+   
+
+</div>
+            </div>
+        </div>
+    </div>
+
+                <div class="card-footer  my-2 mx-2" align="right">
+                    <button type="button" class="btn btn-success">Accept</button>
+                    <button type="button" class="btn btn-danger">Reject</button>
+                </div>
+           
+
+
+            }            
+        </div>
+    </div>
+  </div>
+</div>
+
+                    }
 
                 </div>
-
+         
                 
                 <div class="col-md-4 fixed-top col-md-pull-8 bg-dark font-weight-bold  rounded text-white" style="height: 300px; margin-left: 65%; margin-top: 10%;">
                     <div class="booking-form my-4">
@@ -92,10 +134,12 @@
                         {
                             if (Model.isAvaliable)
                             {
-                                 
-                                    
-                                      
-                                    <div class="row">
+
+
+
+                                if (hasReq != "has")
+                                {
+                                            <div class="row">
                                         <div class="col-sm-7">
                                             
                                                 <span class="form-label">Check In</span>
@@ -114,7 +158,15 @@
                                     <div class="form-btn align-content-end">
                                         <button onclick="location.href= '@Url.Action("Requests", "Rents", new { rentid = @Model.ID})'" class="btn btn-success">Request</button>
                                    </div>
-                                 
+                            
+                                }
+                                else
+                                {
+                                    
+                                <p align="center" class="font-weight-bold fs-3 my-5">You have requested for this rent</p><br />
+                                                        <p align="center" class="font-weight-bold fs-3 my-5">Request date - @dateReq</p><br />
+        
+                                }     
                             }
                             else
                             {
@@ -133,6 +185,7 @@
                             else
                             {
                                 <p align="center" class="font-weight-bold fs-3 my-5">You own this</p><br />
+                                 <p align="center" class="font-weight-bold fs-3 my-5">Total requests : <span>@Model.reqs.Count()</span></p><br />
 
                             }
                            
@@ -145,7 +198,26 @@
         </div>
     </div>
 </div>
-<h3 class="text-dark border-dark">Hosted by- @Model.oname</h3>
+<h3 class=" mt-3 border-dark">Hosted by</h3>
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <img src="~/Content/images/coverpic/@Model.owner.pic" alt="Avatar" class="mr-3" style="height: 100px; width: 100px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = Model.owner.id})'">
+            <div>
+                <h3 class="card-title mb-0">@Model.owner.name</h3>
+    <h4 class="my-2">
+        <span class=" px-3  badge rounded-pill bg-primary">
+            <i class="bi bi-star"></i> @Model.owner.rating
+        </span>
+    </h4>
+   
+
+</div>
+            </div>
+        </div>
+    </div>
+
+
 <br />
 <div class="row gutters-sm">
     <div class="col-sm-12 mb-3">

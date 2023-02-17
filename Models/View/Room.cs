@@ -16,7 +16,7 @@ namespace projectsd.Models.View
         public int? needmembers { get; set; }
         public int? size { get; set; }
         public string Location { get; set; }
-        public string oname { get; set; }// object here
+        public Models.View.User owner { get; set; }// object here
         public int totalrents { get; set; }
         
     }

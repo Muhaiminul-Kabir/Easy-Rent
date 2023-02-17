@@ -12,7 +12,7 @@ namespace projectsd.Controllers
 {
     public class RentsController : Controller
     {
-        private efdbEntities2 db = new efdbEntities2();
+        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
         List<Models.View.Rent> rents = new List<Models.View.Rent>();
         Models.View.Rent room = new Models.View.Rent();
         // GET: /Rents/
@@ -90,6 +90,8 @@ namespace projectsd.Controllers
 
         public ActionResult Details(int? id)
         {
+
+            var uid = (int?)Session["user"];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -98,6 +100,17 @@ namespace projectsd.Controllers
             if (rentdb == null)
             {
                 return HttpNotFound();//TO BE DONE: will show a error view
+            }
+
+            var chek = (from i in db.Requests
+                        join j in db.Rentealseats on i.rentid equals j.id
+                        
+                        where j.id == id && i.senderid == uid
+                        select i).ToList();
+
+            if(chek.Count() == 1){
+                ViewBag.hasReq = "has";
+                ViewBag.dateReq = chek[0].date;
             }
 
 
@@ -142,9 +155,13 @@ namespace projectsd.Controllers
                        where d.id == roomno
                        select f
                       ).ToList();
+           // return Content(id.ToString());
+            var reqs = (from i in db.Requests
+                        where i.rentid == id
+                        select i).ToList();
 
 
-
+         //   return Content(reqs.Count().ToString());
             //hierarchy
 
             if (roomDetail == null)
@@ -163,9 +180,43 @@ namespace projectsd.Controllers
                 room.size = roomDetail.size;
                 room.pic = coverpic;
                 room.price = roomDetail.price;
-                room.oname = roomDetail.oner.Name;
+                
+                Models.View.User tn = new Models.View.User();
+
+                    tn.id = roomDetail.oner.id;
+
+                    tn.name = roomDetail.oner.Name;
+
+                    tn.pic = roomDetail.oner.pic;
+                    tn.rating = roomDetail.oner.Rating;
+
+                    room.owner = tn;
+
+                    foreach (var item in reqs)
+                    {
+                        Models.View.Requests rq = new Models.View.Requests();
+
+                        var sender  = (from i in db.Users
+                                         where i.id == item.senderid
+                                         select i).FirstOrDefault();
+
+                        rq.sender = new Models.View.User();
+
+                        rq.sender.id = sender.id;
+                        rq.sender.pic = sender.pic;
+                        rq.sender.name = sender.Name;
+                        rq.date = item.date;
+
+                        room.reqs.Add(rq);
+
+
+                    }
+
+
                 if ((int?)Session["user"] == roomDetail.oner.id)
                 {
+                   
+
                     ViewBag.userType = "owner";
                 }
             }
@@ -186,7 +237,7 @@ namespace projectsd.Controllers
 
         [HttpPost]
         public ActionResult Index(int? minp,int? maxp,DateTime? start,int? minroom,int? maxroom,
-                                  int? minmem, int? maxmem, int? minsize, int? maxsize)
+                                  int? minmem, int? maxmem, int? minsize, int? maxsize,string district)
         {
 
             ViewBag.Search = 0;
@@ -222,7 +273,7 @@ namespace projectsd.Controllers
             if(minp != null && maxp != null && minmem != null && maxmem != null && maxroom != null && minroom != null && minsize != null && maxroom != null ){
                var lrents = (from p in db.Rentealseats
                           join x in db.Rooms on p.RoomId equals x.id
-                          where (p.price >= minp && p.price <= maxp) && p.startdate >= start && (x.sqft <= maxsize && x.sqft >= minsize) && (x.maxmembers <= maxmem && x.maxmembers >= minmem) && (x.noofrooms >= minroom && x.noofrooms <= maxroom)
+                          where (p.price >= minp && p.price <= maxp) && p.startdate >= start && (x.sqft <= maxsize && x.sqft >= minsize) && (x.maxmembers <= maxmem && x.maxmembers >= minmem) && (x.noofrooms >= minroom && x.noofrooms <= maxroom) && x.upname == district
                          
                           select new
                           {
@@ -334,7 +385,7 @@ namespace projectsd.Controllers
             var req = new Request
             {
                 rentid = rentid,
-                tenantid = t.id,
+                senderid = user,
                 date = DateTime.Today
 
             };

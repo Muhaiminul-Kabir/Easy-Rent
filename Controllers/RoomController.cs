@@ -14,7 +14,7 @@ namespace projectsd.Controllers
    
     public class RoomController : Controller
     { 
-        private efdbEntities2 db = new efdbEntities2();
+        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
      
         //
         // GET: /Room/
@@ -263,7 +263,6 @@ namespace projectsd.Controllers
 
                 objcvm.totalReq = (from i in db.Requests
                                    where i.rentid == item
-
                                    select i).Count();
                 rents.Add(objcvm);
             }

@@ -10,19 +10,13 @@
 namespace projectsd.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Tenant
+    public partial class sp_helpdiagrams_Result
     {
-        public Tenant()
-        {
-            this.Rentealseats = new HashSet<Rentealseat>();
-            this.Users = new HashSet<User>();
-        }
-    
-        public int id { get; set; }
-    
-        public virtual ICollection<Rentealseat> Rentealseats { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

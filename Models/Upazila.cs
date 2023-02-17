@@ -14,11 +14,6 @@ namespace projectsd.Models
     
     public partial class Upazila
     {
-        public Upazila()
-        {
-            this.Rooms = new HashSet<Room>();
-        }
-    
         public int UpazilaId { get; set; }
         public int DistrictId { get; set; }
         public string UpazilaName { get; set; }
@@ -26,6 +21,5 @@ namespace projectsd.Models
         public string url { get; set; }
     
         public virtual District District { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
     }
 }
