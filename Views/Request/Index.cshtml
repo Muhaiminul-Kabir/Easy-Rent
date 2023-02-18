@@ -43,16 +43,17 @@
           </div>
           <div class="card-footer" align="right">
             @if(item.status == "pending"){
-                <button type="button" class="btn btn-danger" onclick="cancelCard(this)">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Remove", "Request", new { reqid = item.reqid})'">Cancel</button>
             }
             else if (item.status == "rejected")
             {
-                <button type="button" class="btn btn-danger" onclick="cancelCard(this)">Delete</button>
+                <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Remove", "Request", new { reqid = item.reqid})'">Delete</button>
                 
             }
             @if (item.status == "accepted")
             {
-               <button type="button" class="btn btn-danger" onclick="cancelCard(this)">Delete</button>
+               <button type="button" class="btn btn-success" onclick="location.href = '@Url.Action("Confirm", "Request", new { reqid = item.reqid})'">Confirm</button>
+                <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Remove", "Request", new { reqid = item.reqid})'">Delete</button>
              
             }
          </div>

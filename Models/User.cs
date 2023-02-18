@@ -16,14 +16,19 @@ namespace projectsd.Models
     {
         public User()
         {
+            this.chrooms = new HashSet<chroom>();
+            this.chrooms1 = new HashSet<chroom>();
             this.Messages = new HashSet<Message>();
             this.Messages1 = new HashSet<Message>();
             this.Payments = new HashSet<Payment>();
             this.Payments1 = new HashSet<Payment>();
+            this.rentrevs = new HashSet<rentrev>();
             this.Requests = new HashSet<Request>();
             this.reviewofrents = new HashSet<reviewofrent>();
             this.Reviewofusers = new HashSet<Reviewofuser>();
             this.Reviewofusers1 = new HashSet<Reviewofuser>();
+            this.userrevs = new HashSet<userrev>();
+            this.userrevs1 = new HashSet<userrev>();
         }
     
         public int id { get; set; }
@@ -41,15 +46,20 @@ namespace projectsd.Models
     
         public virtual Auth Auth { get; set; }
         public virtual bank bank { get; set; }
+        public virtual ICollection<chroom> chrooms { get; set; }
+        public virtual ICollection<chroom> chrooms1 { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<Message> Messages1 { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Payment> Payments1 { get; set; }
+        public virtual ICollection<rentrev> rentrevs { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<reviewofrent> reviewofrents { get; set; }
         public virtual ICollection<Reviewofuser> Reviewofusers { get; set; }
         public virtual ICollection<Reviewofuser> Reviewofusers1 { get; set; }
         public virtual Tenant Tenant { get; set; }
+        public virtual ICollection<userrev> userrevs { get; set; }
+        public virtual ICollection<userrev> userrevs1 { get; set; }
     }
 }

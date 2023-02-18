@@ -16,6 +16,7 @@ namespace projectsd.Models
     {
         public Rentealseat()
         {
+            this.rentrevs = new HashSet<rentrev>();
             this.Requests = new HashSet<Request>();
         }
     
@@ -28,6 +29,7 @@ namespace projectsd.Models
         public Nullable<System.DateTime> posted { get; set; }
         public string pic { get; set; }
     
+        public virtual ICollection<rentrev> rentrevs { get; set; }
         public virtual Room Room { get; set; }
         public virtual Tenant Tenant { get; set; }
         public virtual ICollection<Request> Requests { get; set; }

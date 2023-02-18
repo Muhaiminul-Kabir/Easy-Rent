@@ -19,7 +19,7 @@ namespace projectsd.Controllers
 {
     public class RequestController : Controller
     {
-        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
+        private dbf db = new dbf();
         List<Models.View.Requests> reqs = new List<Models.View.Requests>();
 
 
@@ -44,22 +44,9 @@ namespace projectsd.Controllers
             int? rent = req.rentid;
             int? sender = req.senderid;
 
-            //get tenant id from user
-            var getTenant = (from i in db.Users
-                             where i.id == sender
-                             select i.Tenantid).FirstOrDefault();
+            
 
-
-            //update tenantid in  rentalseats 
-            var upRent = (from i in db.Rentealseats
-                          where i.id == rent
-                          select i).First();
-
-            upRent.TenantId = (int?)getTenant;
-
-            db.SaveChanges();
-
-            // Remove the request
+            // change status to accepted
             req.stat = "accepted";
             db.SaveChanges();
 
@@ -67,15 +54,104 @@ namespace projectsd.Controllers
 
 
             // return to rent details page
-            return RedirectToAction("Details", "Rents", new { id = Session["rent"] });
+            return RedirectToAction("Details", "Rents", new { id = (int?)req.rentid });
         }
 
 
 
         public ActionResult Reject(int? reqid)
         {
-            return View();
+
+            var req = (from i in db.Requests
+                       where i.id == reqid
+                       select i).FirstOrDefault();
+
+            //change status to rejected
+            req.stat = "rejected";
+
+            db.SaveChanges();
+
+            // return to rent details page
+            return RedirectToAction("Details", "Rents", new { id = (int?)req.rentid });
+
         }
+
+
+
+        public ActionResult Confirm(int? reqid)
+        {
+
+            //if no id than show this
+            if (reqid == null)
+            {
+                return Content("Invalid request");
+            }
+
+            // get data using request id
+            var req = (from i in db.Requests
+                       where i.id == reqid
+                       select i).FirstOrDefault();
+
+
+
+
+            //store data in variables
+            int? rent = req.rentid;
+            int? sender = req.senderid;
+
+            int? user = (int?)Session["user"];
+
+            //get tenant id from user
+            var getTenant = (from i in db.Users
+                             where i.id == user
+                             select i).FirstOrDefault();
+
+
+            //update tenantid in  rentalseats 
+            var upRent = (from i in db.Rentealseats
+                          where i.id == rent
+                          select i).First();
+
+            upRent.TenantId = (int?)getTenant.Tenantid;
+            db.SaveChanges();
+
+            //delte the request from db table
+            db.Requests.Remove(req);
+            db.SaveChanges();
+
+            //also delete all requests sent by this user
+
+            
+            
+            var allReqByCurrUser = (from i in db.Requests
+                       where i.senderid == user
+                       select i).ToList();
+
+            foreach (var item in allReqByCurrUser)
+            {
+                db.Requests.Remove(item);
+                
+            }
+            db.SaveChanges();
+
+            // auto reject all requests for the rent
+            var otherReq = (from i in db.Requests
+                       where i.rentid == rent
+                       select i).ToList();
+
+
+            foreach (var item in otherReq)
+            {
+                item.stat = "rejected";
+            }
+            db.SaveChanges();
+            
+
+
+
+            return RedirectToAction("Index");
+        }
+
 
         public ActionResult Remove(int? reqid)
         {

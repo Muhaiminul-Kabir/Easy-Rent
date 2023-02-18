@@ -17,6 +17,7 @@ namespace projectsd.Models.View
         public bool isAvaliable = true;
         public int totalReq { get; set; }
         public List<Models.View.Requests> reqs = new List<Models.View.Requests>();
+        public List<Models.View.Review> revs = new List<Models.View.Review>();
         
     }
 }

@@ -10,13 +10,16 @@
 namespace projectsd.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class rentrev
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int id { get; set; }
+        public string review { get; set; }
+        public Nullable<int> reveiewerid { get; set; }
+        public Nullable<int> rentid { get; set; }
+    
+        public virtual Rentealseat Rentealseat { get; set; }
+        public virtual User User { get; set; }
     }
 }

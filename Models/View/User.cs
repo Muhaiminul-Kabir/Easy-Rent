@@ -8,6 +8,7 @@ namespace projectsd.Models.View
     public class User
     {
         public int? id { get; set; }
+        public List<Models.View.Review> revs = new List<Models.View.Review>();
         public string name { get; set; }
         public string email { get; set; }
         public string cell { get; set; }

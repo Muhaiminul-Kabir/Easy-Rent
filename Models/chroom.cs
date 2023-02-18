@@ -12,16 +12,20 @@ namespace projectsd.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Reviewofuser
+    public partial class chroom
     {
+        public chroom()
+        {
+            this.Messages = new HashSet<Message>();
+        }
+    
         public int id { get; set; }
-        public Nullable<int> userid { get; set; }
-        public Nullable<int> reviewid { get; set; }
-        public Nullable<int> reviewerid { get; set; }
-        public string review { get; set; }
+        public Nullable<int> p1 { get; set; }
+        public Nullable<int> p2 { get; set; }
+        public Nullable<System.DateTime> time { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
-        public virtual Review Review1 { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

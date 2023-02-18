@@ -186,6 +186,9 @@
     <Compile Include="Models\bank.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\chroom.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\District.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -225,6 +228,9 @@
     <Compile Include="Models\Rentealseat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\rentrev.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Request.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -240,12 +246,6 @@
     <Compile Include="Models\Room.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -258,6 +258,12 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\userrev.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View\ChatRooms.cs" />
+    <Compile Include="Models\View\Review.cs" />
+    <Compile Include="Models\View\Messages.cs" />
     <Compile Include="Models\View\Requests.cs" />
     <Compile Include="Models\View\Owner.cs" />
     <Compile Include="Models\View\Facillities.cs" />
@@ -292,8 +298,10 @@
     <Content Include="Views\Room\Details.cshtml" />
     <Content Include="Views\Room\RentList.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
-    <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\Inbox.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Shared\_partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -305,6 +313,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Review\" />
     <Folder Include="Views\Userw\" />
   </ItemGroup>
   <ItemGroup>

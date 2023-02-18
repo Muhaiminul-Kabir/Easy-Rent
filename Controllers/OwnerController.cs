@@ -12,7 +12,7 @@ namespace projectsd.Controllers
 {
     public class OwnerController : Controller
     {
-        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
+        private dbf db = new dbf(); 
         Models.View.Owner me = new Models.View.Owner();
         // GET: /Owner/
         public ActionResult Index()

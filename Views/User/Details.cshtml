@@ -142,18 +142,27 @@
                                     <h3 class="card-title">Reviews from others</h3>
                                 </i>
 
-                                <div class="card my-2">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Shihabul islam shuvo</h5>
-                                        <p class="mx-3">Great guy. Helpful</p>
-                                    </div>
-                                </div>
-                                <div class="card my-2">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Shihabul islam shuvo</h5>
-                                        <p class="mx-3">Great guy. Helpful</p>
-                                    </div>
-                                </div>
+                               @foreach (var item in Model.revs)
+        {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <img src="~/Content/images/coverpic/@item.reviewerpic" alt="Avatar" class="mr-3" style="height: 70px; width: 70px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = @item.reviewerid })'">
+                            <div>
+                                <h4 class="card-title mb-0">@item.reviewerName</h4>
+                                <p class="fs-6 my-2" >
+                                    @item.reviewtext
+                                </p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+        }
                             </div>
                         </div>
                     </div>
@@ -184,7 +193,7 @@
                     <option>5</option>
                 </select>
                 <label for="review" class="form-label mt-4">Review</label>
-                <textarea class="form-control" id="review" rows="3" spellcheck="false"></textarea>
+                <input class="form-control" id="review" name="review" rows="3" spellcheck="false"/>
 
 
                 <div class="modal-footer">

@@ -16,6 +16,18 @@
     <Property Name="amount" Type="Int32" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Users_bank" FromRole="bank" ToRole="Users" />
   </EntityType>
+  <EntityType Name="chroom">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="p1" Type="Int32" />
+    <Property Name="p2" Type="Int32" />
+    <Property Name="time" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="User" Relationship="Self.FK__chrooms__p1__24134F1B" FromRole="chrooms" ToRole="Users" />
+    <NavigationProperty Name="User1" Relationship="Self.FK__chrooms__p2__25077354" FromRole="chrooms" ToRole="Users" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__chroom__25FB978D" FromRole="chrooms" ToRole="Messages" />
+  </EntityType>
   <EntityType Name="District">
     <Key>
       <PropertyRef Name="DistrictId" />
@@ -68,6 +80,9 @@
     <Property Name="recieverid" Type="Int32" />
     <Property Name="text" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="time" Type="DateTime" Precision="3" />
+    <Property Name="stat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="chroom" Type="Int32" />
+    <NavigationProperty Name="chroom1" Relationship="Self.FK__Messages__chroom__25FB978D" FromRole="Messages" ToRole="chrooms" />
     <NavigationProperty Name="User" Relationship="Self.FK_Chats_Users" FromRole="Messages" ToRole="Users" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Chats_Users1" FromRole="Messages" ToRole="Users" />
   </EntityType>
@@ -103,9 +118,21 @@
     <Property Name="price" Type="Int32" />
     <Property Name="posted" Type="DateTime" Precision="0" />
     <Property Name="pic" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="rentrevs" Relationship="Self.FK__rentrev__rentid__381A47C8" FromRole="Rentealseats" ToRole="rentrev" />
     <NavigationProperty Name="Room" Relationship="Self.FK_Rentealseats_Rooms" FromRole="Rentealseats" ToRole="Rooms" />
     <NavigationProperty Name="Tenant" Relationship="Self.FK_Rentealseats_Tenants" FromRole="Rentealseats" ToRole="Tenants" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Rentealseats" FromRole="Rentealseats" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="rentrev">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="review" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="reveiewerid" Type="Int32" />
+    <Property Name="rentid" Type="Int32" />
+    <NavigationProperty Name="Rentealseat" Relationship="Self.FK__rentrev__rentid__381A47C8" FromRole="rentrev" ToRole="Rentealseats" />
+    <NavigationProperty Name="User" Relationship="Self.FK__rentrev__reveiew__3726238F" FromRole="rentrev" ToRole="Users" />
   </EntityType>
   <EntityType Name="Request">
     <Key>
@@ -115,9 +142,9 @@
     <Property Name="rentid" Type="Int32" />
     <Property Name="date" Type="DateTime" Precision="3" />
     <Property Name="senderid" Type="Int32" />
+    <Property Name="stat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Rentealseat" Relationship="Self.FK_Requests_Rentealseats" FromRole="Requests" ToRole="Rentealseats" />
     <NavigationProperty Name="User" Relationship="Self.FK__Requests__sender__12E8C319" FromRole="Requests" ToRole="Users" />
-    <Property Name="stat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="reviewofrent">
     <Key>
@@ -127,7 +154,8 @@
     <Property Name="rentid" Type="Int32" />
     <Property Name="reviewerid" Type="Int32" />
     <Property Name="reviewid" Type="Int32" />
-    <NavigationProperty Name="Review" Relationship="Self.FK_reviewofrent_Reviews" FromRole="reviewofrent" ToRole="Reviews" />
+    <Property Name="review" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Review1" Relationship="Self.FK_reviewofrent_Reviews" FromRole="reviewofrent" ToRole="Reviews" />
     <NavigationProperty Name="User" Relationship="Self.FK_reviewofrent_Users" FromRole="reviewofrent" ToRole="Users" />
   </EntityType>
   <EntityType Name="Reviewofuser">
@@ -138,9 +166,10 @@
     <Property Name="userid" Type="Int32" />
     <Property Name="reviewid" Type="Int32" />
     <Property Name="reviewerid" Type="Int32" />
+    <Property Name="review" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="User" Relationship="Self.FK_Reviewofuser_Users" FromRole="Reviewofuser" ToRole="Users" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Reviewofuser_Users1" FromRole="Reviewofuser" ToRole="Users" />
-    <NavigationProperty Name="Review" Relationship="Self.FK_Reviews_Reviewofuser" FromRole="Reviewofuser" ToRole="Reviews" />
+    <NavigationProperty Name="Review1" Relationship="Self.FK_Reviews_Reviewofuser" FromRole="Reviewofuser" ToRole="Reviews" />
   </EntityType>
   <EntityType Name="Review">
     <Key>
@@ -199,6 +228,17 @@
     <Property Name="url" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="District" Relationship="Self.FK__Upazilas__Distri__5555A4F4" FromRole="Upazilas" ToRole="Districts" />
   </EntityType>
+  <EntityType Name="userrev">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="review" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="reveiewerid" Type="Int32" />
+    <Property Name="userid" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="Self.FK__userrev__reveiew__3AF6B473" FromRole="userrev" ToRole="Users" />
+    <NavigationProperty Name="User1" Relationship="Self.FK__userrev__userid__3BEAD8AC" FromRole="userrev" ToRole="Users" />
+  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="id" />
@@ -214,18 +254,24 @@
     <Property Name="Tenantid" Type="Int32" />
     <Property Name="AccId" Type="Int32" />
     <Property Name="pic" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="VID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Auth" Relationship="Self.FK_Users_Auth" FromRole="Users" ToRole="Auth" />
     <NavigationProperty Name="bank" Relationship="Self.FK_Users_bank" FromRole="Users" ToRole="bank" />
+    <NavigationProperty Name="chrooms" Relationship="Self.FK__chrooms__p1__24134F1B" FromRole="Users" ToRole="chrooms" />
+    <NavigationProperty Name="chrooms1" Relationship="Self.FK__chrooms__p2__25077354" FromRole="Users" ToRole="chrooms" />
     <NavigationProperty Name="Messages" Relationship="Self.FK_Chats_Users" FromRole="Users" ToRole="Messages" />
     <NavigationProperty Name="Messages1" Relationship="Self.FK_Chats_Users1" FromRole="Users" ToRole="Messages" />
     <NavigationProperty Name="Owner" Relationship="Self.FK_Users_Owners" FromRole="Users" ToRole="Owners" />
     <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Users" FromRole="Users" ToRole="Payments" />
     <NavigationProperty Name="Payments1" Relationship="Self.FK_Payments_Users1" FromRole="Users" ToRole="Payments" />
+    <NavigationProperty Name="rentrevs" Relationship="Self.FK__rentrev__reveiew__3726238F" FromRole="Users" ToRole="rentrev" />
     <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__sender__12E8C319" FromRole="Users" ToRole="Requests" />
     <NavigationProperty Name="reviewofrents" Relationship="Self.FK_reviewofrent_Users" FromRole="Users" ToRole="reviewofrent" />
     <NavigationProperty Name="Reviewofusers" Relationship="Self.FK_Reviewofuser_Users" FromRole="Users" ToRole="Reviewofuser" />
     <NavigationProperty Name="Reviewofusers1" Relationship="Self.FK_Reviewofuser_Users1" FromRole="Users" ToRole="Reviewofuser" />
     <NavigationProperty Name="Tenant" Relationship="Self.FK_Users_Tenants" FromRole="Users" ToRole="Tenants" />
+    <NavigationProperty Name="userrevs" Relationship="Self.FK__userrev__reveiew__3AF6B473" FromRole="Users" ToRole="userrev" />
+    <NavigationProperty Name="userrevs1" Relationship="Self.FK__userrev__userid__3BEAD8AC" FromRole="Users" ToRole="userrev" />
   </EntityType>
   <Association Name="FK_Users_Auth">
     <End Role="Auth" Type="Self.Auth" Multiplicity="0..1" />
@@ -248,6 +294,42 @@
       </Principal>
       <Dependent Role="Users">
         <PropertyRef Name="AccId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__chrooms__p1__24134F1B">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="chrooms" Type="Self.chroom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="chrooms">
+        <PropertyRef Name="p1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__chrooms__p2__25077354">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="chrooms" Type="Self.chroom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="chrooms">
+        <PropertyRef Name="p2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Messages__chroom__25FB978D">
+    <End Role="chrooms" Type="Self.chroom" Multiplicity="0..1" />
+    <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="chrooms">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="chroom" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -371,6 +453,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__rentrev__rentid__381A47C8">
+    <End Role="Rentealseats" Type="Self.Rentealseat" Multiplicity="0..1" />
+    <End Role="rentrev" Type="Self.rentrev" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rentealseats">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="rentrev">
+        <PropertyRef Name="rentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Rentealseats_Rooms">
     <End Role="Rooms" Type="Self.Room" Multiplicity="0..1" />
     <End Role="Rentealseats" Type="Self.Rentealseat" Multiplicity="*" />
@@ -404,6 +498,18 @@
       </Principal>
       <Dependent Role="Requests">
         <PropertyRef Name="rentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__rentrev__reveiew__3726238F">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="rentrev" Type="Self.rentrev" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="rentrev">
+        <PropertyRef Name="reveiewerid" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -491,9 +597,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="efdbEntitiesNirjon" annotation:LazyLoadingEnabled="true">
+  <Association Name="FK__userrev__reveiew__3AF6B473">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="userrev" Type="Self.userrev" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userrev">
+        <PropertyRef Name="reveiewerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__userrev__userid__3BEAD8AC">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="userrev" Type="Self.userrev" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userrev">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbf" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Auths" EntityType="Self.Auth" />
     <EntitySet Name="banks" EntityType="Self.bank" />
+    <EntitySet Name="chrooms" EntityType="Self.chroom" />
     <EntitySet Name="Districts" EntityType="Self.District" />
     <EntitySet Name="Divisions" EntityType="Self.Division" />
     <EntitySet Name="FacilitiesForRooms" EntityType="Self.FacilitiesForRoom" />
@@ -502,6 +633,7 @@
     <EntitySet Name="Owners" EntityType="Self.Owner" />
     <EntitySet Name="Payments" EntityType="Self.Payment" />
     <EntitySet Name="Rentealseats" EntityType="Self.Rentealseat" />
+    <EntitySet Name="rentrevs" EntityType="Self.rentrev" />
     <EntitySet Name="Requests" EntityType="Self.Request" />
     <EntitySet Name="reviewofrents" EntityType="Self.reviewofrent" />
     <EntitySet Name="Reviewofusers" EntityType="Self.Reviewofuser" />
@@ -510,6 +642,7 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Tenants" EntityType="Self.Tenant" />
     <EntitySet Name="Upazilas" EntityType="Self.Upazila" />
+    <EntitySet Name="userrevs" EntityType="Self.userrev" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <AssociationSet Name="FK_Users_Auth" Association="Self.FK_Users_Auth">
       <End Role="Auth" EntitySet="Auths" />
@@ -518,6 +651,18 @@
     <AssociationSet Name="FK_Users_bank" Association="Self.FK_Users_bank">
       <End Role="bank" EntitySet="banks" />
       <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__chrooms__p1__24134F1B" Association="Self.FK__chrooms__p1__24134F1B">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="chrooms" EntitySet="chrooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__chrooms__p2__25077354" Association="Self.FK__chrooms__p2__25077354">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="chrooms" EntitySet="chrooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Messages__chroom__25FB978D" Association="Self.FK__Messages__chroom__25FB978D">
+      <End Role="chrooms" EntitySet="chrooms" />
+      <End Role="Messages" EntitySet="Messages" />
     </AssociationSet>
     <AssociationSet Name="FK__Districts__Divis__5090EFD7" Association="Self.FK__Districts__Divis__5090EFD7">
       <End Role="Division" EntitySet="Divisions" />
@@ -559,6 +704,10 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="Payments" EntitySet="Payments" />
     </AssociationSet>
+    <AssociationSet Name="FK__rentrev__rentid__381A47C8" Association="Self.FK__rentrev__rentid__381A47C8">
+      <End Role="Rentealseats" EntitySet="Rentealseats" />
+      <End Role="rentrev" EntitySet="rentrevs" />
+    </AssociationSet>
     <AssociationSet Name="FK_Rentealseats_Rooms" Association="Self.FK_Rentealseats_Rooms">
       <End Role="Rooms" EntitySet="Rooms" />
       <End Role="Rentealseats" EntitySet="Rentealseats" />
@@ -570,6 +719,10 @@
     <AssociationSet Name="FK_Requests_Rentealseats" Association="Self.FK_Requests_Rentealseats">
       <End Role="Rentealseats" EntitySet="Rentealseats" />
       <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__rentrev__reveiew__3726238F" Association="Self.FK__rentrev__reveiew__3726238F">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="rentrev" EntitySet="rentrevs" />
     </AssociationSet>
     <AssociationSet Name="FK__Requests__sender__12E8C319" Association="Self.FK__Requests__sender__12E8C319">
       <End Role="Users" EntitySet="Users" />
@@ -599,46 +752,13 @@
       <End Role="Tenants" EntitySet="Tenants" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <FunctionImport Name="sp_alterdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_creatediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_dropdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(efdbModel.sp_helpdiagramdefinition_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(efdbModel.sp_helpdiagrams_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_renamediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="new_diagramname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_upgraddiagrams" />
+    <AssociationSet Name="FK__userrev__reveiew__3AF6B473" Association="Self.FK__userrev__reveiew__3AF6B473">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="userrev" EntitySet="userrevs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__userrev__userid__3BEAD8AC" Association="Self.FK__userrev__userid__3BEAD8AC">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="userrev" EntitySet="userrevs" />
+    </AssociationSet>
   </EntityContainer>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
 </Schema>

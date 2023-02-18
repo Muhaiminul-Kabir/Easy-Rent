@@ -10,10 +10,16 @@
 namespace projectsd.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class userrev
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int id { get; set; }
+        public string review { get; set; }
+        public Nullable<int> reveiewerid { get; set; }
+        public Nullable<int> userid { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

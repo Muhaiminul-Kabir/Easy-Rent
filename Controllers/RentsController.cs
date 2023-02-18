@@ -12,7 +12,7 @@ namespace projectsd.Controllers
 {
     public class RentsController : Controller
     {
-        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
+        private dbf db = new dbf();
         List<Models.View.Rent> rents = new List<Models.View.Rent>();
         Models.View.Rent room = new Models.View.Rent();
         // GET: /Rents/
@@ -180,6 +180,7 @@ namespace projectsd.Controllers
             
 
 
+
          //   return Content(reqs.Count().ToString());
             //hierarchy
 
@@ -248,6 +249,29 @@ namespace projectsd.Controllers
                     }
 
 
+                    //find reviews
+                    var revs = (from i in db.rentrevs
+                                where i.rentid == id
+                                select i).ToList();
+
+                
+                    foreach (var item in revs)
+                    {
+                        Models.View.Review v = new Models.View.Review();
+
+                        v.reviewerid = (int?)item.id;
+                        v.reviewtext = item.review;
+                        v.reviewerName = (from i in db.Users
+                                          where i.id == item.reveiewerid
+                                          select i.Name).FirstOrDefault();
+                        v.reviewerpic = (from i in db.Users
+                                         where i.id == item.reveiewerid
+                                         select i.pic).FirstOrDefault();
+
+                        room.revs.Add(v);
+
+                    }
+                
                 if ((int?)Session["user"] == roomDetail.oner.id)
                 {
                    
@@ -429,16 +453,29 @@ namespace projectsd.Controllers
 
             }
 
+            //check if user has tenant id
+            var checkTenant = (from i in db.Users
+                                   where i.id == user
+                                   select i).First();
+
+
+
+
             // create a tenant data for current user because he has requested for a rent
             // this portion will add data to tenant table 
-            var t = new Tenant
-             {
-                 
-             };
-             db.Tenants.Add(t);
+            if(checkTenant.Tenantid == null){
+                var t = new Tenant
+                {
 
-             db.SaveChanges();
+                };
+                db.Tenants.Add(t);
 
+                db.SaveChanges();
+
+                checkTenant.Tenantid = t.id;
+            
+
+            }
             //inserting request data in the database
             var req = new Request
             {
@@ -453,14 +490,7 @@ namespace projectsd.Controllers
             db.Requests.Add(req);
             db.SaveChanges();
 
-            // get tenant id and insert it in Users table
-            var u = (from i in db.Users
-                     where i.id == user
-                     select i
-                         ).First();
-            u.Tenantid = t.id;
-            db.SaveChanges();
-
+            
             
            
             
@@ -468,6 +498,24 @@ namespace projectsd.Controllers
             // redirect without any object[direct to method]
             return RedirectToAction("Details","Rents", new { id = rentid});
 
+        }
+
+        [HttpPost]
+        public ActionResult Details(string rev)
+        {
+
+            var newRev = new rentrev
+            {
+                reveiewerid = (int?)Session["user"],
+                review = rev,
+                rentid = (int?)Session["rent"]
+            };
+
+            db.rentrevs.Add(newRev);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details", "Rents", new { id = (int?)Session["rent"] });
         }
 
 

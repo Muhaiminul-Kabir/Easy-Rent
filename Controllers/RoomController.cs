@@ -13,8 +13,8 @@ namespace projectsd.Controllers
 {
    
     public class RoomController : Controller
-    { 
-        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
+    {
+        private dbf db = new dbf();
      
         //
         // GET: /Room/

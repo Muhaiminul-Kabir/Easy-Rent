@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="efdbModelStoreContainer" CdmEntityContainer="efdbEntitiesNirjon">
+  <EntityContainerMapping StorageEntityContainer="efdbModelStoreContainer" CdmEntityContainer="dbf">
     <EntitySetMapping Name="Auths">
       <EntityTypeMapping TypeName="efdbModel.Auth">
         <MappingFragment StoreEntitySet="Auth">
@@ -14,6 +14,16 @@
         <MappingFragment StoreEntitySet="bank">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="chrooms">
+      <EntityTypeMapping TypeName="efdbModel.chroom">
+        <MappingFragment StoreEntitySet="chrooms">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="p1" ColumnName="p1" />
+          <ScalarProperty Name="p2" ColumnName="p2" />
+          <ScalarProperty Name="time" ColumnName="time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -66,6 +76,8 @@
           <ScalarProperty Name="recieverid" ColumnName="recieverid" />
           <ScalarProperty Name="text" ColumnName="text" />
           <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="stat" ColumnName="stat" />
+          <ScalarProperty Name="chroom" ColumnName="chroom" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -101,14 +113,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="rentrevs">
+      <EntityTypeMapping TypeName="efdbModel.rentrev">
+        <MappingFragment StoreEntitySet="rentrev">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="review" ColumnName="review" />
+          <ScalarProperty Name="reveiewerid" ColumnName="reveiewerid" />
+          <ScalarProperty Name="rentid" ColumnName="rentid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Requests">
       <EntityTypeMapping TypeName="efdbModel.Request">
         <MappingFragment StoreEntitySet="Requests">
-          <ScalarProperty Name="stat" ColumnName="stat" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="rentid" ColumnName="rentid" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="senderid" ColumnName="senderid" />
+          <ScalarProperty Name="stat" ColumnName="stat" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -119,6 +141,7 @@
           <ScalarProperty Name="rentid" ColumnName="rentid" />
           <ScalarProperty Name="reviewerid" ColumnName="reviewerid" />
           <ScalarProperty Name="reviewid" ColumnName="reviewid" />
+          <ScalarProperty Name="review" ColumnName="review" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -129,6 +152,7 @@
           <ScalarProperty Name="userid" ColumnName="userid" />
           <ScalarProperty Name="reviewid" ColumnName="reviewid" />
           <ScalarProperty Name="reviewerid" ColumnName="reviewerid" />
+          <ScalarProperty Name="review" ColumnName="review" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -186,6 +210,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="userrevs">
+      <EntityTypeMapping TypeName="efdbModel.userrev">
+        <MappingFragment StoreEntitySet="userrev">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="review" ColumnName="review" />
+          <ScalarProperty Name="reveiewerid" ColumnName="reveiewerid" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="efdbModel.User">
         <MappingFragment StoreEntitySet="Users">
@@ -200,32 +234,9 @@
           <ScalarProperty Name="Tenantid" ColumnName="Tenantid" />
           <ScalarProperty Name="AccId" ColumnName="AccId" />
           <ScalarProperty Name="pic" ColumnName="pic" />
+          <ScalarProperty Name="VID" ColumnName="VID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="efdbModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="efdbModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="efdbModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="efdbModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="efdbModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="efdbModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="efdbModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="efdbModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="efdbModel.Store.sp_upgraddiagrams" />
   </EntityContainerMapping>
 </Mapping>

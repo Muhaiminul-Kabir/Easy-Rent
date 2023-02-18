@@ -14,6 +14,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
@@ -41,7 +42,7 @@
 {
 
     <a class="nav-link" title="Requests" href="@Url.Action("Index", "Request")"><i class="bi bi-file-ruled-fill mx-2" style="font-size:20px;"></i></a>
-                        <a class="nav-link" title="Messages" href="#"><i class="bi bi-chat-right-text-fill mx-2 " style="font-size:20px;"></i></a>
+    <a class="nav-link" title="Messages" href="@Url.Action("Index", "Chat")"><i class="bi bi-chat-right-text-fill mx-2 " style="font-size:20px;"></i></a>
 
                         <a class="nav-link" title="Apartments" href="@Url.Action("Index", "Room")"><i class="bi bi-buildings mx-2" style="font-size:20px;"></i></a>
                         
@@ -85,7 +86,6 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
 

@@ -13,7 +13,7 @@ namespace projectsd.Controllers
 {
     public class UserController : Controller
     {
-        private efdbEntitiesNirjon db = new efdbEntitiesNirjon();
+        private dbf db = new dbf();
      
          Models.View.User uservm = new Models.View.User();
         // GET: /User/
@@ -25,6 +25,7 @@ namespace projectsd.Controllers
         // GET: /User/Details/5
         public ActionResult Details(int? id)
         {
+          
 
             Models.View.User user = new Models.View.User();
             if (id == null)
@@ -36,7 +37,7 @@ namespace projectsd.Controllers
             {
                 return Content("Data not avaliable");
             }
-
+  Session["visit"] = id;
             var u = (from x in db.Users
                      where x.id == id
                      select x 
@@ -51,6 +52,32 @@ namespace projectsd.Controllers
             {
                 user.isTenant = true;
             }
+
+
+            //find reviews
+            var revs = (from i in db.userrevs
+                        where i.userid == id
+                        select i).ToList();
+
+
+            foreach (var item in revs)
+            {
+                Models.View.Review v = new Models.View.Review();
+
+                v.reviewerid = (int?)item.id;
+                v.reviewtext = item.review;
+                v.reviewerName = (from i in db.Users
+                                  where i.id == item.reveiewerid
+                                  select i.Name).FirstOrDefault();
+                v.reviewerpic = (from i in db.Users
+                                 where i.id == item.reveiewerid
+                                 select i.pic).FirstOrDefault();
+
+                user.revs.Add(v);
+
+            }
+
+
             user.id = id;
             user.name = u.Name;
             user.email = u.Email;
@@ -141,6 +168,46 @@ namespace projectsd.Controllers
             //IFERROR
             return View(); 
         }
+
+
+
+
+
+        [HttpPost]
+        public ActionResult Details(int? rating,string review)
+        {
+
+            var cc = (int?)Session["visit"];
+
+            var up = (from i in db.Users
+                      where i.id == cc
+                      select i).First();
+            int? pr = up.Rating;
+
+            up.Rating = (int?)(pr + rating) / 2;
+            db.SaveChanges();
+
+            var newRev = new userrev
+            {
+                
+                reveiewerid = (int?)Session["user"],
+                review = review,
+                userid = (int?)Session["visit"]
+                
+            };
+
+            db.userrevs.Add(newRev);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details", "User", new { id = (int?)Session["visit"] });
+        }
+
+
+
+
+
+
 
 
 
