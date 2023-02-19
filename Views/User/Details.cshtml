@@ -6,9 +6,15 @@
     ViewBag.Title = "Details";
     var type = ViewBag.userType;
     var uin = (int?)Session["user"];
+    var state = Session["log"];
 
 }
 
+<style>
+ .h:hover {
+        background-color: rgb(180, 180, 180);
+    }
+</style>
 <h2>Details</h2>
 
 
@@ -24,7 +30,7 @@
 
 
         <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 fixed-top" style="top:25%">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
@@ -48,7 +54,7 @@
                                     Rate
                                 </button>
 
-                                <button class="btn btn-outline-primary">Message</button>
+    <button class="btn btn-outline-primary" onclick="location.href= '@Url.Action("Chat", "Buttons")'">Message</button>
                                 }
                               
                             </div>
@@ -64,9 +70,7 @@
                                     <i class="bi bi-star"></i> @Model.rating
                                 </span>
                             </h5>
-                            <div>
-                                <i class="bi bi-user"></i>1,050,008 total
-                            </div>
+                           
                            
                         </div>
                     </div>
@@ -74,7 +78,7 @@
 
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-8" style="left:30%">
 
                 <div class="card mb-3">
                     <div class="card-body">
@@ -125,12 +129,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <a class="btn btn-info " target="__blank"
-                                   href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -139,35 +138,89 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <i>
+                                    <h3 class="card-title">Renting at</h3>
+                                </i>
+                                @if (Model.rents.Count() <= 0 || state != "in")
+                                {
+                                    <h5>Not renting anywhere</h5>
+                                }
+                                else
+                                {
+
+                                    foreach (var item in Model.rents)
+                                    {
+                                        <div class="card mb-3 h" onclick="location.href= '@Url.Action("Details", "Rents", new { id = @item.ID })'">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="~/Content/images/coverpic/@item.pic" alt="Avatar" class="mr-3" style="height: 70px; width: 70px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "Rents", new { id = @item.ID })'">
+                                                    <div>
+                                                        <h4 class="card-title mb-0">Rent-00<span>@item.ID</span></h4>
+                                                        <p class="fs-6 my-2">
+                                                            From - @item.startDate
+                                                        </p>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      <div class="card-footer  my-2 mx-2" align="right">
+                                                <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Terminate", "Buttons", new { rentId = @item.ID})'">Terminate</button>                                             
+                                     </div>
+
+
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i>
                                     <h3 class="card-title">Reviews from others</h3>
                                 </i>
+                                @if (Model.revs.Count() <= 0)
+                                {
+                                    <h5>No one reviewed you</h5>
+                                }
+                                else { 
+                                foreach (var item in Model.revs)
+                                {
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <img src="~/Content/images/coverpic/@item.reviewerpic" alt="Avatar" class="mr-3" style="height: 70px; width: 70px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = @item.reviewerid })'">
+                                                <div>
+                                                    <h4 class="card-title mb-0">@item.reviewerName</h4>
+                                                    <p class="fs-6 my-2">
+                                                        @item.reviewtext
+                                                    </p>
 
-                               @foreach (var item in Model.revs)
-        {
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <img src="~/Content/images/coverpic/@item.reviewerpic" alt="Avatar" class="mr-3" style="height: 70px; width: 70px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = @item.reviewerid })'">
-                            <div>
-                                <h4 class="card-title mb-0">@item.reviewerName</h4>
-                                <p class="fs-6 my-2" >
-                                    @item.reviewtext
-                                </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
 
 
+
+                                }
+                                }
                             </div>
                         </div>
                     </div>
+
                 </div>
 
 
 
-        }
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
 
 
 

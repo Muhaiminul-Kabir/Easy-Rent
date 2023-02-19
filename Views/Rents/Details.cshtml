@@ -7,8 +7,17 @@
     var hasReq = ViewBag.hasReq;
     var dateReq = ViewBag.dateReq;
     var cnt = ViewBag.rentReqCnt;
+    var tid = (int?)Session["tid"];
 
 }
+
+<style>
+    .h:hover {
+        background-color: rgb(180, 180, 180);
+        width:50%;
+    }
+</style>
+
 <br /><br />
 <br /><br />
 <br />
@@ -58,6 +67,7 @@
                         <p>Rooms: @Model.noofrooms</p>
                         <p>Address: <span class="font-weight-bold">@Model.Location</span></p>
                         <p>Size: @Model.size<span> sqft</span></p>
+                        <p>Starts from: <span class="text-info">@Model.startDate</span></p>
                     </div>
                     @if (bag != "owner")
                     {
@@ -66,7 +76,7 @@
                     }
                     else
                     {
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button type="button" onclick="location.href = '@Url.Action("DeleteRent", "Buttons")'" class="btn btn-danger">Delete</button>
 
                     }
                     <br />
@@ -180,6 +190,43 @@
                                     <p align="center" class="font-weight-bold fs-3 my-5">Request date - @dateReq</p><br />
 
                                 }
+                            }else if (!Model.isAvaliable)
+                            {
+
+                                <p class="font-weight-bold">Rented By</p><br />
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <img src="~/Content/images/coverpic/@Model.tenant.pic" alt="Avatar" class="mr-3" style="height: 100px; width: 100px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = Model.tenant.id})'">
+                                            <div>
+                                                <h3 class="card-title mb-0 text-dark">
+
+                                                    @if (Model.tenant.tenantId == tid)
+                                                    {
+                                                        <span>You</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@Model.tenant.name</span>
+                                                    }
+
+                                                </h3>
+                                                <h4 class="my-2">
+                                                    <span class=" px-3  badge rounded-pill bg-primary">
+                                                        <i class="bi bi-star"></i> @Model.tenant.rating
+                                                    </span>
+                                                </h4>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                      <div class="card-footer  my-2 mx-2" align="right">
+                                                <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("TerminateOwn", "Buttons", new { rentId = @Model.ID})'">Terminate</button>                                             
+                                     </div>
+
                             }
 
                         }
@@ -206,7 +253,10 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            
+                                      <div class="card-footer  my-2 mx-2" align="right">
+                                                <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("TerminateOwn", "Buttons", new { rentId = @Model.ID})'">Terminate</button>                                             
+                                     </div>
 
                             }
                             else
@@ -226,7 +276,7 @@
     </div>
 </div>
 <h3 class=" mt-4 border-dark">Hosted by</h3>
-<div class="card">
+<div class="card h" onclick="location.href= '@Url.Action("Details", "User", new { id = Model.owner.id})'">
     <div class="card-body">
         <div class="d-flex align-items-center">
             <img src="~/Content/images/coverpic/@Model.owner.pic" alt="Avatar" class="mr-3" style="height: 100px; width: 100px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = Model.owner.id})'">
@@ -251,15 +301,21 @@
 
         <i> <h3 class="card-title">Reviews from others</h3></i>
 
-        @foreach (var item in Model.revs)
+        @if (Model.revs.Count() <= 0)
         {
-            <div class="card mb-3">
+            <h5>No one reviewed this post</h5>
+        }
+        else
+        {
+            foreach (var item in Model.revs)
+            {
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <img src="~/Content/images/coverpic/@item.reviewerpic" alt="Avatar" class="mr-3" style="height: 70px; width: 70px; border-radius: 50%; " onclick="location.href= '@Url.Action("Details", "User", new { id = @item.reviewerid })'">
                             <div>
                                 <h4 class="card-title mb-0">@item.reviewerName</h4>
-                                <p class="fs-6 my-2" >
+                                <p class="fs-6 my-2">
                                     @item.reviewtext
                                 </p>
 
@@ -269,6 +325,9 @@
                     </div>
                 </div>
 
+
+
+            }
         }
     </div>
 </div>

@@ -63,6 +63,7 @@ namespace projectsd.Controllers
                 var rooms = (
                    from x in db.Rooms
                    where x.ownerid == oid
+                   where x.sqft != 0
                    select x
                ).ToList();
                 foreach (var item in rooms)
@@ -72,6 +73,7 @@ namespace projectsd.Controllers
                     x.totalrents = (from i in db.Rentealseats
                                     join j in db.Rooms on i.RoomId equals j.id
                                     where j.id == item.id
+                                    where i.price != 0
                                     select i
                                         ).Count();
                     room.Add(x);
@@ -80,6 +82,7 @@ namespace projectsd.Controllers
 
 
 
+                ViewBag.count = room.Count();
                 
 
                 return View(room);
@@ -189,6 +192,7 @@ namespace projectsd.Controllers
                 var rooms = (
                    from x in db.Rooms
                    where x.ownerid == oid
+                   where x.sqft != 0
                    select x
                ).ToList();
                 foreach (var item in rooms)
@@ -198,6 +202,7 @@ namespace projectsd.Controllers
                     x.totalrents = (from i in db.Rentealseats
                                     join j in db.Rooms on i.RoomId equals j.id
                                     where j.id == item.id
+                                    where i.price != 0
                                     select i
                                         ).Count();
                     room.Add(x);
@@ -250,6 +255,7 @@ namespace projectsd.Controllers
             var x = (from i in db.Rentealseats
                                 join j in db.Rooms on i.RoomId equals j.id
                                 where i.RoomId == roomId
+                                where i.price != 0
                                 select i.id
                      ).ToList();
             

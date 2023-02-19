@@ -50,6 +50,7 @@ namespace projectsd.Controllers
             var lrents = (from p in db.Rentealseats
                           join x in db.Rooms on p.RoomId equals x.id
                           where p.TenantId == null
+                          where p.price != 0
                           select new
                           {
                               cover = p.pic,
@@ -215,6 +216,7 @@ namespace projectsd.Controllers
                     Models.View.User tnt = new Models.View.User();
 
                     tnt.id = roomDetail.tenant.id;
+                    tnt.tenantId = roomDetail.tenant.Tenantid;
 
                     tnt.name = roomDetail.tenant.Name;
 
@@ -259,7 +261,9 @@ namespace projectsd.Controllers
                     {
                         Models.View.Review v = new Models.View.Review();
 
-                        v.reviewerid = (int?)item.id;
+
+                        v.reviewid = (int?)item.id;
+                        v.reviewerid = (int?)item.reveiewerid;
                         v.reviewtext = item.review;
                         v.reviewerName = (from i in db.Users
                                           where i.id == item.reveiewerid
@@ -341,6 +345,7 @@ namespace projectsd.Controllers
                           join x in db.Rooms on p.RoomId equals x.id
                           where (p.price >= minp && p.price <= maxp) && p.startdate >= start && (x.sqft <= maxsize && x.sqft >= minsize) && (x.maxmembers <= maxmem && x.maxmembers >= minmem) && (x.noofrooms >= minroom && x.noofrooms <= maxroom) && x.upname == district
                           where p.TenantId == null
+                          where p.price != 0
                           select new
                           {
                               cover = p.pic,
@@ -383,6 +388,7 @@ namespace projectsd.Controllers
                 //getting datasets from database
                 var lrents = (from p in db.Rentealseats
                           join x in db.Rooms on p.RoomId equals x.id
+                          where p.price !=0
                           select new
                           {
                               cover = p.pic,
@@ -503,6 +509,11 @@ namespace projectsd.Controllers
         [HttpPost]
         public ActionResult Details(string rev)
         {
+
+            if(Session["log"]!= "in"){
+                return RedirectToAction("Login", "User");
+        
+            }
 
             var newRev = new rentrev
             {

@@ -8,7 +8,10 @@ namespace projectsd.Models.View
     public class User
     {
         public int? id { get; set; }
+        public int? tenantId { get; set; }
+        
         public List<Models.View.Review> revs = new List<Models.View.Review>();
+        public List<Models.View.Rent> rents = new List<Models.View.Rent>();
         public string name { get; set; }
         public string email { get; set; }
         public string cell { get; set; }
@@ -20,6 +23,7 @@ namespace projectsd.Models.View
         public string pic { get; set; }
         public bool isOwner = false;
         public bool isTenant = false;
+
 
 
 

@@ -64,7 +64,8 @@ namespace projectsd.Controllers
             {
                 Models.View.Review v = new Models.View.Review();
 
-                v.reviewerid = (int?)item.id;
+                v.reviewid = (int?)item.id;
+                v.reviewerid = (int?)item.reveiewerid;
                 v.reviewtext = item.review;
                 v.reviewerName = (from i in db.Users
                                   where i.id == item.reveiewerid
@@ -74,6 +75,27 @@ namespace projectsd.Controllers
                                  select i.pic).FirstOrDefault();
 
                 user.revs.Add(v);
+
+            }
+
+            int? tid = (int?)Session["tid"];
+            //find rents
+            var rentts = (from i in db.Rentealseats
+                        where i.TenantId == tid
+                        where i.price != 0
+                        select i).ToList();
+
+
+
+            foreach (var item in rentts)
+            {
+                Models.View.Rent v = new Models.View.Rent();
+
+                v.ID = item.id;
+                v.startDate = item.startdate;
+                v.pic = item.pic;
+
+                user.rents.Add(v);
 
             }
 
@@ -177,6 +199,12 @@ namespace projectsd.Controllers
         public ActionResult Details(int? rating,string review)
         {
 
+            if (Session["log"] != "in")
+            {
+                return RedirectToAction("Login", "User");
+
+            }
+
             var cc = (int?)Session["visit"];
 
             var up = (from i in db.Users
@@ -233,7 +261,7 @@ namespace projectsd.Controllers
             {
                 ViewBag.error = "Invalid";
             }
-
+            Session["log"] = "out";
 
             if (email != "" && pass != "")
             {
@@ -245,7 +273,8 @@ namespace projectsd.Controllers
                           select new{
                               id = p.id,
                               pass = e.pass,
-                              pic = p.pic
+                              pic = p.pic,
+                              tid = p.Tenantid
                           }).FirstOrDefault();
 
                 if(x != null){
@@ -254,6 +283,7 @@ namespace projectsd.Controllers
                        Session["email"] = email;
                        Session["log"] = "in";
                        Session["pic"] = x.pic;
+                       Session["tid"] = x.tid;
                         
                        Session["user"] = x.id;
                       // return Content(ViewBag.userid.ToString());

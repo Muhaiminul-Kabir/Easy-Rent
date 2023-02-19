@@ -25,14 +25,14 @@ namespace projectsd.Controllers
 
 
             var chatList1 = (from i in db.chrooms
-                            join j in db.Messages on i.id equals j.chroom
+                            
                             where i.p1 == user || i.p2 == user
                             orderby i.time descending
                             select new
                             {
                                 chatno = i.id
                             }
-                                ).Distinct().ToList();
+                                ).ToList();
             
             
             
