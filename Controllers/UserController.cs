@@ -81,6 +81,7 @@ namespace projectsd.Controllers
             int? tid = (int?)Session["tid"];
             //find rents
             var rentts = (from i in db.Rentealseats
+                          where i.TenantId != null
                         where i.TenantId == tid
                         where i.price != 0
                         select i).ToList();
@@ -108,6 +109,8 @@ namespace projectsd.Controllers
             user.rating = u.Rating;
             user.gender = u.Gender;
             user.pic = u.pic;
+            user.vid = u.VID;
+            Session["vid"] = u.VID;
             return View(user);
         }
 
@@ -119,8 +122,11 @@ namespace projectsd.Controllers
         [HttpPost]
         public ActionResult Create( string name,string cell,string vid, string password, string gender, string email,string address, string propic,string start)
         {
-            
-            if (email != "" && password != "" && vid != "")
+
+            bool valid = cell.All(c => "0123456789".Contains(c));
+
+
+            if (valid == true && email != "" && password != "" && vid != "")
             {
 
                 uservm.email = email;
@@ -175,15 +181,20 @@ namespace projectsd.Controllers
 
 
                 return RedirectToAction("Login", "User");
-            }
-            else if (vid == "")
-            {
-                ViewBag.error = "zyxi";
-            }
-            else
+            } else
             {
                 ViewBag.error = "zyx";
             }
+
+            if (!valid)
+            {
+                ViewBag.error = "zyxi2";
+            }
+            if (vid == "")
+            {
+                ViewBag.error = "zyxi";
+            }
+           
 
 
 
@@ -251,6 +262,7 @@ namespace projectsd.Controllers
             if (email == null)
             {
                 return Content("Invalid request");
+            
             }
 
             var result = (from item in db.Auths

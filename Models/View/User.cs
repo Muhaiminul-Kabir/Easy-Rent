@@ -15,6 +15,7 @@ namespace projectsd.Models.View
         public string name { get; set; }
         public string email { get; set; }
         public string cell { get; set; }
+        public string vid { get; set; }
         public string gender { get; set; }
         public int? age { get; set; }
         public int? rating { get; set; }

@@ -60,19 +60,25 @@
                             <input type="text" class="form-control" name="name" placeholder="Enter your full name">
                             <label for="cell" class="form-label mt-4">Cell</label>
                             <input type="text" class="form-control" name="cell" placeholder="Enter your Mobile number">
+                            <label>
+                                @if (x == "zyxi2")
+                                {
+                                    <span class="text-warning">Number is not valid</span>
+                                }
+                            </label>
                             <label for="address" class="form-label mt-4">address</label>
                             <input type="text" class="form-control" name="address" placeholder="Enter your Address">
                             <br />
                             <label for="start">Birth date</label>
 
                             <input type="date" name="start"
-                                   value="2018-07-22"
-                                   min="2018-01-01" max="2018-12-31">
+                                   value="@DateTime.Now"
+                                   min="1970-01-01" max="2013-12-31">
                             <br />
                             <label for="propic" class="my-2 form-label mt-4">Photo</label>
                             <input class="form-control" accept="image/png, image/jpeg" type="file" name="propic" id="propic">
                             <br />
-                             <label for="vid" class="my-2 form-label mt-4">NID/ID</label>
+                              <label for="vid" class="my-2 form-label mt-4">NID/ID</label>
                             <input class="form-control" accept="image/png, image/jpeg" type="file" name="vid" id="vid">
                             <label>
                                 @if (x == "zyxi")
@@ -99,4 +105,3 @@
         </div>
     </div>
 </div>
-

@@ -113,6 +113,15 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
+                                <h6 class="mb-0">NID/BID</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.vid
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
                                 <h6 class="mb-0">Address</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
@@ -127,6 +136,10 @@
                             <div class="col-sm-9 text-secondary">
                                 @Model.gender
                             </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                           <button class="btn btn-info rounded" onclick="location.href = '@Url.Action("ShowVid", "Buttons")'">Show Identity Document</button>
                         </div>
                         <hr>
                        

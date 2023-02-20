@@ -14,6 +14,17 @@ namespace projectsd.Controllers
 
         //
         // GET: /Buttons/
+
+
+
+        public ActionResult ShowVid(string vid)
+        {
+            
+            return View();
+        }
+
+
+
         public ActionResult Terminate(int? rentid)
         {
             //setting null at tenantid
@@ -108,6 +119,11 @@ namespace projectsd.Controllers
 
         public ActionResult Chat()
         {
+            if (Session["log"] != "in")
+            {
+                return RedirectToAction("Login","User");
+            }
+            
             int? guest = (int?)Session["visit"];
             int? user = (int?)Session["user"];
             
