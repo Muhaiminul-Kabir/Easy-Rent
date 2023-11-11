@@ -10,5 +10,5 @@
 Feel free to check the report of this project
 [https://drive.google.com/file/d/1C1IgHZfWQCABZ867X78WmbEWRHDd9hQn/view?usp=drivesdk](https://drive.google.com/file/d/1C1IgHZfWQCABZ867X78WmbEWRHDd9hQn/view?usp=drivesdk)
 ### Screenshots
-Some of the screenshots of the project is attached 
+Some of the screenshots of the project are attached 
 [https://drive.google.com/file/d/1CCQip6Tvl8uk6RB9V1wyFKTB_xFSsAiU/view?usp=drivesdk](https://drive.google.com/file/d/1CCQip6Tvl8uk6RB9V1wyFKTB_xFSsAiU/view?usp=drivesdk)
