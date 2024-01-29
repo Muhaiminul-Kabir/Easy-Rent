@@ -5,6 +5,15 @@
 + Used Linq to execute SQL queries in C#
 + Used Bootstrap 5.0.2 to style the cshtml pages
 
+### Getting started
++ Open new ASP.NET MVC project in VS2013
++ Rename the project name as projectsd
++ Download sql file from this [link]()
++ 
+
+
+
+
 
 ### Project report
 Feel free to check the report of this project
