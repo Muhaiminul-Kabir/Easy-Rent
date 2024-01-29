@@ -8,8 +8,13 @@
 ### Getting started
 + Open new ASP.NET MVC project in VS2013
 + Rename the project name as projectsd
++ Open MSSQL Server
 + Download sql file from this [link](https://github.com/Muhaiminul-Kabir/Easy-Rent/blob/master/efdb.sql)
-+ Include the .mdf and .log file from this [link]()
++ Execute the sql file
++ Include the .mdf and .log file from this [link](https://github.com/Muhaiminul-Kabir/Easy-Rent/blob/master/Desktop.zip) into <i>C:\Program Files\Microsoft SQL Server\servername\MSSQL\DATA\</i>
++ Add the ADO Entity model to the Models section with the database
++ Rename entity name from "dbf" to the new entityframework class in every controller class
++ Start debugging the project from VS2013
 
 
 
