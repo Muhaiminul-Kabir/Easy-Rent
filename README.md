@@ -12,7 +12,7 @@ To run this project ASP.NET 5.0 is must and Visual Studio 2013 is recommended. F
 + Open MSSQL Server
 + Download sql file from this [link](https://github.com/Muhaiminul-Kabir/Easy-Rent/blob/master/efdb.sql)
 + Execute the sql file
-+ Include the .mdf and .log file from this [link](https://github.com/Muhaiminul-Kabir/Easy-Rent/blob/master/Desktop.zip) into <i>"C:\Program Files\Microsoft SQL Server\servername\MSSQL\DATA\"
++ Unzip and Include the .mdf and .log file from this [link](https://github.com/Muhaiminul-Kabir/Easy-Rent/blob/master/Desktop.zip) into <i>"C:\Program Files\Microsoft SQL Server\servername\MSSQL\DATA\"
 + Add the ADO Entity model to the Models section with the database
 + Rename entity name from "dbf" to the new entityframework class in every controller class
 + Start debugging the project from Visual Studio
