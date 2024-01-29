@@ -8,8 +8,8 @@
 ### Getting started
 + Open new ASP.NET MVC project in VS2013
 + Rename the project name as projectsd
-+ Download sql file from this [link]()
-+ 
++ Download sql file from this [link](https://github.com/Muhaiminul-Kabir/Easy-Rent/blob/master/efdb.sql)
++ Include the .mdf and .log file from this [link]()
 
 
 
