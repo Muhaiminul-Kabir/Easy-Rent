@@ -22,8 +22,5 @@ To run this project ASP.NET 5.0 is must and Visual Studio 2013 is recommended. F
 
 
 ### Project report
-Feel free to check the report of this project
-[https://drive.google.com/file/d/1C1IgHZfWQCABZ867X78WmbEWRHDd9hQn/view?usp=drivesdk](https://drive.google.com/file/d/1C1IgHZfWQCABZ867X78WmbEWRHDd9hQn/view?usp=drivesdk)
-### Screenshots
-Some of the screenshots of the project are attached 
-[https://drive.google.com/file/d/1CCQip6Tvl8uk6RB9V1wyFKTB_xFSsAiU/view?usp=drivesdk](https://drive.google.com/file/d/1CCQip6Tvl8uk6RB9V1wyFKTB_xFSsAiU/view?usp=drivesdk)
+Feel free to check the report of this project [here](https://docs.google.com/document/d/1MNUbASKvOdD6HHMoiJtgN-X3vH96K8zR/edit?usp=drivesdk&ouid=113135285737657636367&rtpof=true&sd=true))
+
